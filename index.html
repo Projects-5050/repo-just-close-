@@ -1,251 +1,790 @@
 <!doctype html>
 <html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
-<title>خارطة جست بنز بعد الإغلاق</title>
+<title>Talabat October 2026</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@600;700&display=swap">
 <style>
-/* Layout: map-first page. Big coastline map with flows on one side, state switch and numbers on the other; table and steps below. */
+/* Layout: one long reading column per brand; sticky brand switch; summary → when → who → where → how → money → actions */
 :root{
   --paper:#F3F5F1; --surface:#FFFFFF; --sunk:#E9EDE7; --ink:#17201E; --muted:#58645F; --line:#D9DFD8;
-  --sea:#DCE8EC; --land:#FBFBF8; --coast:#A9B9B6;
-  --jb:#B4461A; --hub:#0E5A53; --closed:#B42318; --good:#1E7A4B; --warn:#A86A0C;
-  --f-display:"Reem Kufi","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --fba:#0E5A53; --fba-2:#A8761F; --jb:#B4461A; --jb-2:#3B3530;
+  --good:#1E7A4B; --bad:#B42318; --warn:#A86A0C;
+  --accent:var(--fba); --accent-2:var(--fba-2);
+  --f-display:"Noto Kufi Arabic","IBM Plex Sans Arabic",Tahoma,sans-serif;
   --f-body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+  --r:14px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --paper:#0F1513; --surface:#161E1C; --sunk:#1C2624; --ink:#E6ECE8; --muted:#9BA8A2; --line:#2A3633;
-  --sea:#0F2026; --land:#1E2826; --coast:#3F5552;
-  --jb:#EE8047; --hub:#52B5A8; --closed:#F2766A; --good:#4CC38A; --warn:#E8B24E; color-scheme:dark}}
+  --fba:#52B5A8; --fba-2:#D9A84E; --jb:#EE8047; --jb-2:#D8CFC6;
+  --good:#4CC38A; --bad:#F2766A; --warn:#E8B24E; color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#0F1513; --surface:#161E1C; --sunk:#1C2624; --ink:#E6ECE8; --muted:#9BA8A2; --line:#2A3633;
-  --sea:#0F2026; --land:#1E2826; --coast:#3F5552;
-  --jb:#EE8047; --hub:#52B5A8; --closed:#F2766A; --good:#4CC38A; --warn:#E8B24E; color-scheme:dark}
+  --fba:#52B5A8; --fba-2:#D9A84E; --jb:#EE8047; --jb-2:#D8CFC6;
+  --good:#4CC38A; --bad:#F2766A; --warn:#E8B24E; color-scheme:dark}
+body[data-brand="jb"]{--accent:var(--jb); --accent-2:var(--jb-2)}
 *{box-sizing:border-box}
 body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px}
-::selection{background:color-mix(in srgb,var(--jb) 25%,transparent)}
-:focus-visible{outline:2px solid var(--jb);outline-offset:3px;border-radius:6px}
-.wrap{max-width:1160px;margin-inline:auto;display:grid;gap:28px}
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+::selection{background:color-mix(in srgb,var(--accent) 28%,transparent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1160px;margin-inline:auto}
 .num{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
-h1{font-family:var(--f-display);font-size:clamp(1.9rem,1.3rem + 2.4vw,3rem);line-height:1.2;margin:0;color:var(--jb);text-wrap:balance}
-h2{font-family:var(--f-display);font-size:1.5rem;margin:0;text-wrap:balance}
-h3{font-size:1rem;margin:0}
+h1,h2,h3{text-wrap:balance;margin:0}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(1.45rem,1.1rem + 1.2vw,1.9rem);line-height:1.3}
+h3{font-size:1.05rem;font-weight:600}
 p{margin:0}
-.lede{color:var(--muted);max-width:70ch}
-.top{display:grid;gap:8px}
-.main{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
-.mapbox{background:var(--sea);border:1px solid var(--line);border-radius:16px;overflow:hidden;position:relative}
-.mapbox svg{display:block;width:100%;height:auto}
-.inset{position:absolute;inset-block-end:12px;inset-inline-start:12px;width:96px;background:color-mix(in srgb,var(--surface) 85%,transparent);border:1px solid var(--line);border-radius:10px;padding:6px}
-.inset svg{display:block;width:100%;height:auto}
-.inset span{display:block;font-size:.68rem;color:var(--muted);text-align:center}
-.side{display:grid;gap:16px}
-.switch{display:inline-flex;background:var(--sunk);border-radius:999px;padding:4px;gap:4px;width:max-content}
-.switch button{font:inherit;font-weight:600;border:0;background:transparent;color:var(--muted);padding:7px 20px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
-.switch button[aria-pressed="true"]{background:var(--surface);color:var(--jb);box-shadow:0 1px 3px rgba(0,0,0,.12)}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:grid;gap:12px}
-.flows{display:grid;gap:10px}
-.flow{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;font-size:.95rem}
-.flow .from{color:var(--closed);font-weight:600}
-.flow .to{color:var(--hub);font-weight:600;text-align:end}
-.flow .arr{white-space:nowrap;display:flex;flex-direction:column;align-items:center;font-size:.75rem;color:var(--muted);line-height:1.3}
-.flow .arr svg{width:58px;height:12px}
-.flow small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
-.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.stat{background:var(--surface);padding:12px 14px;display:grid;gap:2px}
-.stat .l{font-size:.8rem;color:var(--muted)}
-.stat .v{font-size:1.35rem;font-weight:700}
-.stat .s{font-size:.78rem;color:var(--muted)}
-label.rng{display:grid;gap:6px;font-size:.9rem}
-label.rng .row{display:flex;justify-content:space-between}
-label.rng output{font-weight:700;color:var(--jb)}
-input[type=range]{width:100%;accent-color:var(--jb)}
-.seg{display:inline-flex;background:var(--sunk);border-radius:999px;padding:3px;gap:3px}
-.seg button{font:inherit;font-size:.85rem;font-weight:600;border:0;background:transparent;color:var(--muted);padding:5px 12px;border-radius:999px;cursor:pointer}
-.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
-.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
-table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:640px}
-th,td{padding:10px 12px;text-align:start;white-space:nowrap}
-thead th{font-size:.8rem;color:var(--muted);font-weight:600;background:var(--sunk);border-bottom:1px solid var(--line)}
-tbody tr{border-top:1px solid var(--line)}
-.pill{display:inline-block;font-size:.75rem;font-weight:700;padding:1px 9px;border-radius:999px}
-.pill.c{color:var(--closed);background:color-mix(in srgb,var(--closed) 12%,transparent)}
-.pill.h{color:var(--hub);background:color-mix(in srgb,var(--hub) 14%,transparent)}
-.pill.k{color:var(--muted);background:var(--sunk)}
-.delta{color:var(--good);font-weight:600}
-.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;counter-reset:s;margin:0;padding:0;list-style:none}
-.steps li{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:6px;align-content:start;font-size:.9rem;color:var(--muted)}
-.steps li b{color:var(--ink);font-size:.98rem}
-.steps li::before{counter-increment:s;content:counter(s);font-family:var(--f-display);font-size:1.5rem;color:var(--jb);line-height:1}
-.note{font-size:.84rem;color:var(--muted)}
-/* map marks */
-.flowline{fill:none;stroke:var(--closed);stroke-linecap:round;stroke-dasharray:2 10;animation:dash 1.2s linear infinite}
-@keyframes dash{to{stroke-dashoffset:-24}}
-.ring{fill:color-mix(in srgb,var(--hub) 10%,transparent);stroke:var(--hub);stroke-dasharray:5 5;stroke-width:1.5;transition:opacity .4s}
-.bdot{transition:r .5s cubic-bezier(.16,1,.3,1),fill .3s,stroke .3s;cursor:pointer}
-.blabel{font-family:var(--f-body);font-weight:600;fill:var(--ink);paint-order:stroke;stroke:var(--land);stroke-width:4px;stroke-linejoin:round}
-.bsub{font-family:var(--f-body);fill:var(--muted);paint-order:stroke;stroke:var(--land);stroke-width:4px;stroke-linejoin:round}
-.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--paper);font-size:.82rem;padding:8px 11px;border-radius:9px;z-index:20;opacity:0;transition:opacity .12s;max-width:240px;line-height:1.5}
-@media (max-width:900px){.main{grid-template-columns:minmax(0,1fr)}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:480px){.steps{grid-template-columns:minmax(0,1fr)}.inset{width:76px}}
-@media (prefers-reduced-motion:reduce){.flowline{animation:none;stroke-dasharray:none}*{transition:none!important}}
+.lede{color:var(--muted);max-width:68ch}
+
+/* sticky switch */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px;flex-wrap:wrap}
+.src{font-size:.82rem;color:var(--muted)}
+.switch{display:inline-flex;background:var(--sunk);border-radius:999px;padding:4px;gap:4px}
+.switch button{font:inherit;font-weight:600;font-size:.95rem;border:0;background:transparent;color:var(--muted);padding:7px 18px;border-radius:999px;cursor:pointer;transition:background .25s,color .25s}
+.switch button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.switch button[data-b="fba"][aria-pressed="true"]{color:var(--fba)}
+.switch button[data-b="jb"][aria-pressed="true"]{color:var(--jb)}
+
+/* hero */
+.hero{padding-block:40px 28px;display:grid;gap:22px}
+.brandname{font-family:var(--f-display);font-weight:700;font-size:clamp(2.3rem,1.6rem + 3vw,3.8rem);line-height:1.15;color:var(--accent)}
+.tag{color:var(--accent-2);font-family:var(--f-display);font-size:1.1rem}
+.period{color:var(--muted);font-size:.95rem}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.kpi{background:var(--surface);padding:18px 20px;display:grid;gap:4px;align-content:start}
+.kpi .l{color:var(--muted);font-size:.85rem}
+.kpi .v{font-size:clamp(1.5rem,1.1rem + 1.3vw,2.2rem);font-weight:700;line-height:1.2}
+.kpi .v small{font-size:.5em;font-weight:500;color:var(--muted);margin-inline-start:4px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:.8rem;font-weight:600;padding:1px 9px;border-radius:999px;width:max-content}
+.up{color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent)}
+.down{color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.flat{color:var(--muted);background:var(--sunk)}
+.kpi .s{font-size:.8rem;color:var(--muted)}
+.verdict{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.verdict div{padding:14px 16px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-size:.95rem}
+.verdict b{display:block;font-size:.85rem;margin-bottom:2px}
+.verdict .g b{color:var(--good)} .verdict .w b{color:var(--warn)} .verdict .r b{color:var(--bad)}
+
+section{padding-block:36px;border-top:1px solid var(--line);display:grid;gap:18px}
+.head{display:grid;gap:6px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px}
+.grid2b{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.chartbox{position:relative;height:300px}
+.chartbox.sm{height:220px}
+.note{font-size:.85rem;color:var(--muted)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-inline-end:6px}
+
+/* table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:860px}
+th,td{padding:11px 12px;text-align:start;white-space:nowrap}
+thead th{font-weight:600;color:var(--muted);font-size:.8rem;border-bottom:1px solid var(--line);background:var(--sunk);position:sticky;top:0}
+th button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0;display:inline-flex;gap:4px;align-items:center}
+th button[aria-sort]::after{content:"▾";font-size:.75rem;color:var(--accent)}
+th button[aria-sort="ascending"]::after{content:"▴"}
+tbody tr{border-top:1px solid var(--line);cursor:pointer;transition:background .15s}
+tbody tr:hover{background:var(--sunk)}
+tbody tr.sel{background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+td.name{font-weight:600}
+.barcell{display:flex;align-items:center;gap:8px}
+.minibar{height:6px;border-radius:3px;background:var(--accent);min-width:2px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-inline-end:6px;vertical-align:middle}
+.pill{display:inline-block;font-size:.75rem;font-weight:600;padding:1px 8px;border-radius:999px}
+.pill.g{color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent)}
+.pill.w{color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,transparent)}
+.pill.r{color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+
+/* branch detail */
+.detail{border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:var(--r);background:var(--surface);padding:20px;display:grid;gap:18px}
+.detail .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.detail .bn{font-family:var(--f-display);font-size:1.6rem;color:var(--accent)}
+.facts{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.fact{background:var(--sunk);border-radius:10px;padding:10px 12px;display:grid;gap:2px}
+.fact .l{font-size:.75rem;color:var(--muted)}
+.fact .v{font-weight:700;font-size:1.1rem}
+.tips{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.tips li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-size:.95rem}
+.tips li svg{margin-top:5px;flex:none}
+
+/* heatmap */
+.heat{display:grid;grid-template-columns:64px repeat(17,minmax(0,1fr));gap:3px;direction:rtl;font-size:.72rem}
+.heat .h{color:var(--muted);text-align:center}
+.heat .d{color:var(--muted);align-self:center}
+.heat .c{aspect-ratio:1/1;border-radius:4px;background:var(--sunk);position:relative}
+.heat .c:hover{outline:2px solid var(--ink)}
+.heatwrap{overflow-x:auto}
+.heatinner{min-width:560px}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--paper);font-size:.8rem;padding:6px 10px;border-radius:8px;z-index:20;opacity:0;transition:opacity .1s}
+
+/* funnel */
+.funnel{display:grid;gap:10px}
+.fstep{display:grid;grid-template-columns:120px 1fr 90px;gap:12px;align-items:center}
+.ftrack{height:34px;background:var(--sunk);border-radius:8px;overflow:hidden}
+.ffill{height:100%;background:var(--accent);border-radius:8px;transition:width .6s cubic-bezier(.16,1,.3,1)}
+.fstep .lab{font-size:.9rem}
+.fstep .val{font-weight:700;text-align:end}
+.fdrop{font-size:.8rem;color:var(--muted);padding-inline-start:132px}
+
+/* money */
+.money{display:flex;height:46px;border-radius:10px;overflow:hidden;font-size:.8rem;font-weight:600}
+.money div{display:flex;align-items:center;justify-content:center;color:#fff;white-space:nowrap;overflow:hidden;padding-inline:6px}
+.mlist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.mlist div{display:grid;gap:2px}
+.mlist .l{font-size:.85rem;color:var(--muted)}
+.mlist .v{font-weight:700;font-size:1.25rem}
+
+/* callout */
+.alert{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:16px 18px;border-radius:var(--r);background:color-mix(in srgb,var(--bad) 8%,var(--surface));border:1px solid color-mix(in srgb,var(--bad) 30%,var(--line))}
+.alert h3{color:var(--bad)}
+
+/* actions */
+.actions{display:grid;gap:12px;counter-reset:a}
+.act{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.act .n{font-family:var(--f-display);font-size:1.5rem;color:var(--accent);line-height:1;min-width:1.4em}
+.act h3{margin-bottom:4px}
+.act p{color:var(--muted);font-size:.93rem;max-width:72ch}
+.act .imp{text-align:end;display:grid;gap:2px;min-width:110px}
+.act .imp b{font-size:1.1rem;color:var(--good)}
+.act .imp span{font-size:.75rem;color:var(--muted)}
+.pri{font-size:.72rem;font-weight:700;padding:1px 8px;border-radius:999px;margin-inline-start:8px;vertical-align:middle}
+.pri.h{background:color-mix(in srgb,var(--bad) 14%,transparent);color:var(--bad)}
+.pri.m{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
+.pri.l{background:var(--sunk);color:var(--muted)}
+
+/* simulator */
+.sim{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:center}
+.ctrl{display:grid;gap:16px}
+.ctrl label{display:grid;gap:6px;font-size:.92rem}
+.ctrl .row{display:flex;justify-content:space-between;gap:8px}
+.ctrl output{font-weight:700;color:var(--accent)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.simout{display:grid;gap:12px;text-align:center;background:var(--sunk);border-radius:var(--r);padding:22px}
+.simout .big{font-size:clamp(1.8rem,1.2rem + 2vw,2.6rem);font-weight:700;color:var(--good)}
+.simout .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:.88rem;color:var(--muted)}
+.simout .row2 b{display:block;color:var(--ink);font-size:1.1rem}
+
+footer{padding-top:28px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem;display:grid;gap:6px}
+
+@media (max-width:900px){
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid2,.grid2b,.sim{grid-template-columns:minmax(0,1fr)}
+  .facts{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .verdict{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:520px){
+  .act{grid-template-columns:auto 1fr}
+  .act .imp{grid-column:2;text-align:start}
+  .fstep{grid-template-columns:86px 1fr 70px;gap:8px}
+  .fdrop{padding-inline-start:94px}
+  .mlist{grid-template-columns:minmax(0,1fr)}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .switch button{padding:7px 12px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.fade{animation:fade .45s cubic-bezier(.16,1,.3,1)}
+@keyframes fade{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
 </style>
 
-<div class="wrap" dir="rtl" lang="ar">
-  <div class="top">
-    <h1>جست بنز بعد الإغلاق</h1>
-    <p class="lede">أين تذهب طلبات الفروع الثلاثة المغلقة: عالي والمالكية ينتقلان إلى مدينة حمد، وسار إلى أقرب فرع. الأرقام طلبات جست بنز في أكتوبر 2026 من كل المنصات (طلبات وجاهز وأهلاً).</p>
+<style>
+:root{--store:#8A6A1E;--jahez:#6B4FA0;--ahlan:#3B7DB8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--store:#D9AE52;--jahez:#A98BE0;--ahlan:#73AEE6}}
+:root[data-theme="dark"]{--store:#D9AE52;--jahez:#A98BE0;--ahlan:#73AEE6}
+.switch button[data-b="all"][aria-pressed="true"]{color:var(--ink)}
+body[data-brand="all"]{--accent:var(--ink);--accent-2:var(--muted)}
+.split{display:flex;height:34px;border-radius:10px;overflow:hidden;font-size:.82rem;font-weight:600}
+.split span{display:flex;align-items:center;justify-content:center;color:#fff;white-space:nowrap;overflow:hidden;padding-inline:8px}
+.findings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.finding{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:.95rem}
+.finding .tg{font-size:.75rem;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.tg.g{color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent)}
+.tg.w{color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,transparent)}
+.tg.r{color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.seg{display:inline-flex;background:var(--sunk);border-radius:999px;padding:3px;gap:3px}
+.seg button{font:inherit;font-size:.85rem;font-weight:600;border:0;background:transparent;color:var(--muted);padding:5px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.rankrow{display:grid;grid-template-columns:190px minmax(0,1fr) 80px;gap:10px;align-items:center;font-size:.9rem}
+.rankrow .tr{height:16px;background:var(--sunk);border-radius:4px;overflow:hidden;display:flex}
+.rankrow .tr span{height:100%}
+.rankrow .v{text-align:end;font-weight:600}
+.ranks{display:grid;gap:8px}
+.lgd{display:flex;gap:16px;font-size:.85rem;color:var(--muted);flex-wrap:wrap}
+.lgd i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:6px;vertical-align:-1px}
+.shead{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+@media (max-width:900px){.findings{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.rankrow{grid-template-columns:120px minmax(0,1fr) 64px;font-size:.82rem}}
+</style>
+<div dir="rtl" lang="ar">
+<div class="bar"><div class="wrap">
+  <div class="switch" role="group" aria-label="اختيار العرض">
+    <button type="button" data-b="fba" aria-pressed="true">فريج بن عاقول</button>
+    <button type="button" data-b="jb" aria-pressed="false">JUST BUNS</button>
+    <button type="button" data-b="all" aria-pressed="false">الصورة الكاملة</button>
   </div>
-
-  <div class="main">
-    <div class="mapbox">
-      <svg id="map" style="direction:ltr" viewBox="0 0 700.2 702.0" role="img" aria-label="خارطة البحرين التقريبية مع فروع جست بنز ومسار الطلبات بعد الإغلاق"></svg>
-      <div class="inset" aria-hidden="true"><svg viewBox="0 0 67.3 115.5"><path d="M25.8,18.9 L31.6,24.0 L33.0,21.8 L35.0,20.2 L35.9,22.4 L36.7,26.0 L38.5,26.1 L37.1,27.8 L37.0,30.6 L34.3,31.3 L35.1,40.0 L34.8,53.3 L32.8,69.8 L31.6,73.1 L27.7,79.5 L27.6,79.6 L26.7,75.0 L25.2,70.1 L23.1,65.2 L20.4,61.1 L14.5,54.4 L13.5,50.2 L16.2,45.2 L16.9,43.0 L17.6,40.8 L16.9,35.2 L14.8,29.6 L12.5,25.6 L12.0,23.8 L12.1,21.3 L13.6,14.2 L14.6,12.5 L16.4,11.6 L16.4,11.6 L16.5,11.6 L19.4,11.7 L21.1,12.0 L23.2,13.0 L25.0,13.8 L25.0,13.8 L30.5,11.6 L31.4,12.2 L32.0,14.2 L32.9,15.5 L33.2,16.1 L33.5,16.8 L32.8,18.3 L31.5,18.7 L27.7,18.2 L25.8,18.9Z M5.1,21.8 L6.5,22.3 L8.0,23.1 L8.0,25.6 L8.3,27.7 L8.6,30.0 L6.1,29.4 L3.5,29.5 L2.8,27.1 L3.1,24.0 L5.1,21.8Z M32.5,6.2 L36.7,4.9 L39.8,6.5 L39.9,8.7 L39.9,11.0 L41.9,13.9 L43.7,14.7 L42.9,16.8 L42.2,17.6 L40.1,16.3 L39.5,14.2 L38.8,12.1 L36.9,11.6 L35.1,11.3 L34.0,11.8 L32.2,8.6 L32.5,6.2Z M55.8,89.8 L56.9,89.9 L58.0,89.1 L59.4,88.3 L59.4,89.3 L59.0,90.6 L58.0,92.1 L57.0,93.5 L57.7,94.1 L58.7,95.3 L58.2,96.0 L56.6,95.6 L55.8,96.2 L54.7,97.2 L54.2,97.8 L54.8,99.8 L55.8,101.2 L56.0,102.2 L55.1,102.6 L54.6,103.5 L54.4,104.7 L55.2,105.3 L55.8,106.2 L54.9,107.0 L54.2,108.4 L53.5,109.7 L53.8,110.6 L53.4,111.0 L51.9,110.2 L50.8,108.6 L51.4,107.2 L52.4,104.9 L52.3,103.4 L52.3,101.3 L51.1,100.0 L51.2,98.7 L51.4,96.9 L51.9,94.9 L53.2,92.7 L55.0,90.5 L55.8,89.8Z M56.0,85.1 L57.0,84.6 L57.9,84.7 L58.1,85.7 L56.6,86.2 L56.0,85.1Z M59.9,96.1 L61.9,96.2 L61.5,97.6 L60.4,98.4 L59.8,97.5 L59.5,96.8 L59.9,96.1Z M58.3,100.2 L59.2,100.3 L60.8,100.6 L61.5,101.3 L61.3,102.5 L60.8,103.2 L60.3,103.0 L59.6,102.9 L58.7,103.0 L58.0,103.4 L57.4,102.2 L57.7,101.4 L57.2,100.8 L57.5,100.1 L58.3,100.2Z" fill="var(--land)" stroke="var(--coast)" stroke-width="1"/><rect x="5.4" y="3.0" width="40.4" height="40.5" fill="none" stroke="var(--jb)" stroke-width="2" rx="2"/></svg><span>البحرين كاملة</span></div>
-    </div>
-
-    <div class="side">
-      <div class="switch" role="group" aria-label="الحالة">
-        <button type="button" data-s="before" aria-pressed="false">قبل الإغلاق</button>
-        <button type="button" data-s="after" aria-pressed="true">بعد الإغلاق</button>
-      </div>
-
-      <div class="panel">
-        <h3>مسار الطلبات</h3>
-        <div class="flows" id="flows"></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-          <span class="note">طلبات سار تذهب إلى</span>
-          <div class="seg" id="saarSeg" role="group" aria-label="وجهة طلبات سار">
-            <button type="button" data-v="qadam" aria-pressed="true">القدم</button>
-            <button type="button" data-v="hamad" aria-pressed="false">مدينة حمد</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <label class="rng" for="rec"><span class="row"><span>نسبة الزبائن الذين ينتقلون للفرع الجديد</span><output id="recO" class="num">60%</output></span>
-          <input type="range" id="rec" min="20" max="100" step="5" value="60"></label>
-        <div class="stats" id="stats"></div>
-        <p class="note">الزبون الذي يبعد أكثر من نطاق التوصيل قد لا يرى الفرع الجديد في التطبيق. لذلك توسيع نطاق التوصيل في طلبات وجاهز شرط أساسي قبل الإغلاق.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="tablewrap"><table id="tbl"></table></div>
-
-  <div style="display:grid;gap:12px">
-    <h2>كيف ينتقل العمل خطوة بخطوة</h2>
-    <ol class="steps">
-      <li><b>وسّع نطاق التوصيل</b>اطلب من طلبات وجاهز أن يغطي جست بنز مدينة حمد عالي والمالكية، وأن يغطي القدم سار، قبل أي إغلاق.</li>
-      <li><b>جهّز مدينة حمد</b>شخص إضافي لجست بنز من 7 إلى 10 صباحاً، وارفع التقييم من 3.5، فهو سيحمل ضعف طلباته.</li>
-      <li><b>أغلق في يوم واحد</b>أوقف الفروع الثلاثة في طلبات وجاهز وأهلاً معاً، حتى لا تضيع طلبات كما حدث في سار على جاهز.</li>
-      <li><b>انقل المخزون</b>الخبز والصوصات والتغليف إلى مدينة حمد والقدم، وأوقف طلب مواد جست بنز للفروع الثلاثة.</li>
-      <li><b>قِس بعد 30 يوماً</b>طلبات مدينة حمد والقدم اليومية مقابل الأرقام في هذه الصفحة، ونسبة الزبائن الذين انتقلوا فعلاً.</li>
-    </ol>
-  </div>
-
-  <p class="note">الخارطة تقريبية، والمسافات خطوط مباشرة بين مواقع الفروع، والمسافة على الطريق أطول قليلاً. نطاق التوصيل الفعلي تحدده كل منصة. طلبات سار محسوبة لشهر كامل (كان مغلقاً 14 يوماً في أكتوبر). الدائرة المتقطعة نصف قطرها 5 كم.</p>
-</div>
+  <span class="src">طلبات · 1–31 أكتوبر 2026</span>
+</div></div>
+<main class="wrap" id="app"></main>
 <div class="tip" id="tip"></div>
+</div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-const G={K:2600,lon0:50.40,lat0:26.30,c:Math.cos(26.15*Math.PI/180)};
-const P=(la,lo)=>[(lo-G.lon0)*G.c*G.K,(G.lat0-la)*G.K];
-const KM=G.K/111.2;
-const COAST="M353.8,275.1 L454.4,363.2 L478.2,325.8 L513.2,297.7 L528.2,337.0 L543.3,398.3 L573.4,401.2 L549.6,430.6 L548.2,479.2 L501.3,490.9 L514.9,642.2 L509.7,871.8 L474.9,1158.0 L453.9,1215.0 L386.0,1326.8 L385.8,1327.3 L370.2,1248.5 L343.5,1162.5 L306.7,1078.5 L260.0,1006.2 L158.2,890.2 L141.2,818.2 L186.7,730.9 L199.3,693.2 L212.1,655.2 L198.8,557.4 L163.4,461.2 L123.7,391.0 L114.1,359.8 L115.8,317.2 L142.8,194.5 L159.9,164.1 L190.2,149.2 L190.4,149.5 L192.8,149.5 L242.5,150.8 L271.7,156.8 L309.0,173.9 L339.3,188.0 L339.6,187.7 L435.7,149.5 L451.1,159.6 L460.7,193.7 L477.7,217.1 L482.9,227.8 L488.0,238.4 L474.9,266.0 L453.0,272.2 L386.5,262.9 L353.8,275.1Z M-5.4,325.8 L19.6,334.1 L44.8,348.1 L44.8,392.6 L49.7,429.0 L54.8,468.0 L12.1,456.8 L-32.9,459.7 L-45.5,417.8 L-40.4,364.8 L-5.4,325.8Z M470.5,54.9 L543.3,32.8 L595.8,60.6 L598.4,99.6 L598.4,138.8 L633.4,189.0 L663.5,202.8 L650.9,239.2 L638.5,253.2 L601.0,230.9 L590.9,194.5 L578.3,158.3 L545.9,149.8 L515.8,144.3 L495.7,152.6 L465.6,96.7 L470.5,54.9Z M873.6,1503.8 L892.7,1507.0 L912.1,1492.1 L935.6,1479.1 L935.6,1495.5 L929.8,1518.4 L912.1,1544.9 L894.3,1567.8 L906.0,1579.5 L923.7,1599.3 L914.9,1612.3 L886.9,1605.8 L873.6,1615.6 L854.4,1633.6 L845.6,1643.5 L855.8,1678.0 L873.6,1702.7 L878.0,1719.4 L861.7,1725.9 L853.0,1742.3 L850.0,1763.6 L863.3,1773.5 L873.6,1788.3 L858.9,1803.1 L845.6,1826.2 L833.7,1849.1 L839.7,1865.8 L832.3,1872.3 L805.7,1859.0 L787.9,1831.2 L796.8,1806.5 L814.5,1765.4 L813.1,1740.7 L813.1,1704.6 L792.3,1681.4 L793.8,1658.3 L796.8,1627.1 L805.7,1592.5 L829.2,1554.8 L860.3,1516.8 L873.6,1503.8Z M876.6,1423.0 L894.3,1414.9 L910.4,1416.5 L913.5,1432.9 L888.3,1442.7 L876.6,1423.0Z M944.5,1614.1 L980.0,1615.6 L972.5,1640.3 L953.4,1653.3 L943.1,1638.5 L938.7,1625.5 L944.5,1614.1Z M917.9,1684.8 L932.6,1686.4 L960.6,1691.3 L972.5,1704.6 L969.5,1724.3 L960.6,1737.3 L952.0,1733.9 L940.1,1730.8 L923.7,1733.9 L912.1,1740.7 L901.6,1719.4 L906.0,1706.1 L898.8,1694.7 L903.2,1683.0 L917.9,1684.8Z";
-// orders per month (all platforms) and sales, Oct 2026. Saar scaled to a full month (88 orders in 17 open days).
-const B={
-  muharraq:{n:"المحرق",ll:[26.2538,50.6184],ord:454,rev:2347.6},
-  sanad:{n:"سند",ll:[26.1497,50.5818],ord:424,rev:2294.4},
-  zinj:{n:"زنج",ll:[26.2137,50.5647],ord:302,rev:1576.7},
-  qadam:{n:"القدم / جبلة حبشي",ll:[26.2174,50.5232],ord:196,rev:1034.5},
-  hamad:{n:"مدينة حمد",ll:[26.1396,50.4924],ord:98,rev:530.3},
-  aali:{n:"عالي",ll:[26.1547,50.5100],ord:57,rev:321.0,close:true},
-  malkiya:{n:"المالكية",ll:[26.1009,50.4847],ord:136,rev:741.3,close:true},
-  saar:{n:"سار",ll:[26.1959,50.4865],ord:Math.round(88*31/17),rev:438.1*31/17,close:true}
+const DATA = {"brands": {"fba": {"branches": [{"id": "21164", "name": "سند", "rev": 2676.824, "revP": 2368.681, "ord": 688, "ordP": 564, "aov": 3.89, "aovP": 4.2, "items": 3.14, "itemsP": 2.68, "cash": 541.199, "online": 2135.625, "cashOrd": 146, "net": 1862.834, "com": 554.677, "visitors": 41588, "explorers": 2965, "carts": 952, "buyers": 676, "visitorsP": 39314, "buyersP": 545, "newC": 99, "retC": 590, "newCP": 96, "retCP": 472, "offline": 4562, "offlineP": 6465, "rej": 0.0, "rejP": 0.18, "awtRate": 52.62, "awtRateP": 51.77, "prep": 510, "prepP": 498, "contact": 0.44, "ready": 94.62, "awtAvg": 3.2, "awtTotal": 703.0, "awtN": 223, "ded": 5, "dedAmt": 4.984, "dedReasons": {"Missing Item - Vendor": 2, "Food quality": 1, "Foreign Object": 1, "Wrong item": 1}, "comp": 3, "canc": 1, "rating": 4.6, "ratingN": 44, "hours": [0, 0, 0, 0, 0, 0, 34, 60, 78, 97, 78, 50, 17, 12, 7, 8, 13, 31, 57, 54, 50, 29, 13, 0], "daily": [51.331, 123.661, 55.202, 81.384, 77.124, 98.623, 55.591, 55.963, 140.778, 83.005, 43.652, 72.675, 59.037, 44.365, 53.111, 152.115, 146.295, 64.025, 63.053, 57.82, 84.916, 64.155, 185.097, 108.259, 114.745, 62.073, 89.583, 67.073, 75.945, 109.461, 136.707], "contactP": 0.35, "readyP": 96.99}, {"id": "21165", "name": "زنج", "rev": 1805.889, "revP": 1397.803, "ord": 452, "ordP": 368, "aov": 4.0, "aovP": 3.8, "items": 2.94, "itemsP": 2.99, "cash": 343.27, "online": 1462.619, "cashOrd": 86, "net": 1266.642, "com": 374.238, "visitors": 29659, "explorers": 2401, "carts": 680, "buyers": 445, "visitorsP": 26248, "buyersP": 363, "newC": 109, "retC": 349, "newCP": 92, "retCP": 279, "offline": 5544, "offlineP": 2872, "rej": 0.22, "rejP": 0.27, "awtRate": 54.42, "awtRateP": 51.9, "prep": 511, "prepP": 477, "contact": 0.22, "ready": 95.13, "awtAvg": 3.2, "awtTotal": 506.0, "awtN": 156, "ded": 1, "dedAmt": 1.903, "dedReasons": {"Missing Item - Vendor": 1}, "comp": 1, "canc": 6, "rating": 4.8, "ratingN": 34, "hours": [0, 0, 0, 0, 0, 0, 17, 45, 57, 64, 51, 33, 27, 14, 18, 6, 6, 10, 30, 24, 29, 11, 10, 0], "daily": [25.0, 81.334, 61.322, 59.545, 40.951, 51.736, 19.38, 67.771, 91.222, 75.583, 40.804, 33.264, 52.551, 48.223, 67.377, 96.726, 36.602, 45.453, 39.901, 53.85, 73.356, 26.102, 83.704, 80.805, 52.152, 60.362, 40.253, 69.882, 74.304, 109.922, 46.452], "contactP": 0.54, "readyP": 94.29}, {"id": "21166", "name": "سترة", "rev": 373.92, "revP": 214.963, "ord": 91, "ordP": 57, "aov": 4.11, "aovP": 3.77, "items": 2.36, "itemsP": 2.37, "cash": 104.959, "online": 268.961, "cashOrd": 27, "net": 258.135, "com": 76.738, "visitors": 4904, "explorers": 495, "carts": 144, "buyers": 86, "visitorsP": 4092, "buyersP": 55, "newC": 19, "retC": 73, "newCP": 15, "retCP": 46, "offline": 36192, "offlineP": 191260, "rej": 1.09, "rejP": 3.28, "awtRate": 35.16, "awtRateP": 49.12, "prep": 672, "prepP": 725, "contact": 0.0, "ready": 95.6, "awtAvg": 4.0, "awtTotal": 104.0, "awtN": 26, "ded": 0, "dedAmt": 0, "dedReasons": {}, "comp": 0, "canc": 1, "rating": 4.5, "ratingN": 5, "hours": [0, 0, 0, 0, 0, 0, 10, 8, 15, 11, 15, 10, 4, 1, 0, 0, 0, 2, 1, 3, 5, 5, 1, 0], "daily": [5.7, 22.45, 13.601, 5.15, 1.7, 0, 3.7, 3.9, 24.701, 24.2, 1.7, 6.7, 13.202, 3.351, 8.0, 23.0, 9.4, 22.303, 7.65, 4.15, 2.75, 7.15, 22.802, 13.353, 6.801, 6.352, 12.75, 1.2, 16.201, 59.153, 20.85], "contactP": 0.0, "readyP": 96.49}, {"id": "21167", "name": "عالي", "rev": 1086.257, "revP": 909.958, "ord": 274, "ordP": 218, "aov": 3.96, "aovP": 4.17, "items": 3.04, "itemsP": 2.99, "cash": 300.52, "online": 785.737, "cashOrd": 80, "net": 763.434, "com": 225.447, "visitors": 17374, "explorers": 1182, "carts": 389, "buyers": 266, "visitorsP": 20798, "buyersP": 209, "newC": 64, "retC": 212, "newCP": 51, "retCP": 168, "offline": 7301, "offlineP": 2898, "rej": 0.36, "rejP": 0.0, "awtRate": 59.49, "awtRateP": 52.29, "prep": 539, "prepP": 522, "contact": 0.72, "ready": 97.08, "awtAvg": 2.9, "awtTotal": 311.0, "awtN": 108, "ded": 2, "dedAmt": 2.3, "dedReasons": {"Missing Item - Vendor": 1, "Wrong item": 1}, "comp": 2, "canc": 2, "rating": 4.3, "ratingN": 23, "hours": [0, 0, 0, 0, 0, 0, 8, 27, 25, 45, 39, 19, 11, 4, 5, 1, 5, 5, 21, 26, 15, 12, 6, 0], "daily": [21.953, 64.671, 14.63, 24.091, 18.4, 35.751, 34.753, 30.552, 91.362, 30.721, 16.831, 30.382, 33.97, 6.45, 23.893, 50.852, 39.79, 5.63, 20.891, 35.991, 17.001, 20.4, 44.472, 39.001, 21.3, 28.83, 32.3, 30.872, 39.133, 149.034, 32.35], "contactP": 0.46, "readyP": 99.08}, {"id": "21168", "name": "سار", "rev": 1208.23, "revP": 1281.128, "ord": 277, "ordP": 322, "aov": 4.36, "aovP": 3.98, "items": 2.63, "itemsP": 2.45, "cash": 191.979, "online": 1016.251, "cashOrd": 42, "net": 841.16, "com": 252.079, "visitors": 12884, "explorers": 1052, "carts": 414, "buyers": 264, "visitorsP": 21307, "buyersP": 313, "newC": 45, "retC": 232, "newCP": 32, "retCP": 291, "offline": 837314, "offlineP": 19886, "rej": 0.0, "rejP": 0.0, "awtRate": 51.62, "awtRateP": 50.31, "prep": 546, "prepP": 537, "contact": 0.72, "ready": 97.11, "awtAvg": 3.1, "awtTotal": 255.0, "awtN": 82, "ded": 4, "dedAmt": 9.702, "dedReasons": {"Food quality": 1, "Missing Item - Vendor": 2, "Cooking instructions were not followed": 1}, "comp": 2, "canc": 0, "rating": 4.8, "ratingN": 31, "hours": [0, 0, 0, 0, 0, 0, 10, 37, 46, 43, 27, 15, 5, 7, 3, 2, 4, 14, 14, 17, 21, 6, 6, 0], "daily": [28.0, 96.106, 100.104, 32.902, 47.404, 53.753, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 53.55, 48.701, 121.407, 107.684, 45.522, 81.045, 74.024, 53.382, 44.551, 92.472, 127.623], "contactP": 0.31, "readyP": 92.24}, {"id": "21169", "name": "القدم / جبلة حبشي", "rev": 2461.516, "revP": 1122.403, "ord": 593, "ordP": 285, "aov": 4.15, "aovP": 3.94, "items": 3.16, "itemsP": 2.72, "cash": 422.217, "online": 2039.299, "cashOrd": 105, "net": 1715.719, "com": 514.618, "visitors": 26754, "explorers": 2323, "carts": 829, "buyers": 575, "visitorsP": 18583, "buyersP": 282, "newC": 164, "retC": 430, "newCP": 60, "retCP": 230, "offline": 2511, "offlineP": 121, "rej": 0.0, "rejP": 0.0, "awtRate": 67.45, "awtRateP": 65.26, "prep": 483, "prepP": 443, "contact": 1.35, "ready": 95.78, "awtAvg": 2.8, "awtTotal": 677.0, "awtN": 246, "ded": 8, "dedAmt": 17.571, "dedReasons": {"Wrong item": 4, "Missing Item - Vendor": 2, "Food quality": 2}, "comp": 7, "canc": 1, "rating": 4.3, "ratingN": 41, "hours": [0, 0, 0, 0, 0, 0, 24, 50, 78, 88, 69, 44, 29, 18, 9, 8, 10, 22, 39, 36, 34, 23, 12, 0], "daily": [42.964, 100.744, 72.073, 26.101, 65.812, 28.752, 67.493, 113.295, 188.124, 127.532, 66.301, 83.891, 69.672, 60.953, 127.276, 185.67, 180.086, 79.696, 68.293, 86.666, 30.401, 61.253, 92.134, 59.004, 17.831, 38.682, 60.132, 28.291, 100.476, 78.794, 53.124], "contactP": 0.34, "readyP": 96.14}, {"id": "21170", "name": "المحرق", "rev": 2909.111, "revP": 2520.729, "ord": 691, "ordP": 577, "aov": 4.21, "aovP": 4.37, "items": 3.59, "itemsP": 3.42, "cash": 755.855, "online": 2153.256, "cashOrd": 176, "net": 2042.508, "com": 603.319, "visitors": 48480, "explorers": 3025, "carts": 952, "buyers": 677, "visitorsP": 43560, "buyersP": 560, "newC": 120, "retC": 574, "newCP": 92, "retCP": 486, "offline": 12194, "offlineP": 6539, "rej": 0.0, "rejP": 0.17, "awtRate": 50.0, "awtRateP": 51.47, "prep": 536, "prepP": 538, "contact": 0.58, "ready": 96.38, "awtAvg": 2.9, "awtTotal": 606.0, "awtN": 212, "ded": 4, "dedAmt": 2.327, "dedReasons": {"Missing Item - Vendor": 4}, "comp": 4, "canc": 3, "rating": 4.7, "ratingN": 51, "hours": [0, 0, 0, 0, 0, 0, 44, 76, 89, 92, 86, 62, 37, 20, 11, 13, 6, 18, 32, 47, 28, 21, 9, 0], "daily": [76.16, 160.635, 172.879, 57.084, 89.665, 88.055, 70.056, 62.031, 172.004, 130.946, 45.633, 47.452, 81.383, 53.663, 51.115, 175.462, 166.184, 54.023, 76.403, 61.845, 61.911, 94.135, 148.936, 125.287, 66.473, 67.477, 57.803, 49.381, 66.211, 167.457, 111.362], "contactP": 0.17, "readyP": 96.88}, {"id": "21171", "name": "مدينة حمد", "rev": 1332.427, "revP": 1023.636, "ord": 337, "ordP": 272, "aov": 3.95, "aovP": 3.76, "items": 3.33, "itemsP": 3.27, "cash": 269.399, "online": 1063.028, "cashOrd": 65, "net": 867.328, "com": 330.257, "visitors": 16700, "explorers": 1343, "carts": 451, "buyers": 327, "visitorsP": 16177, "buyersP": 266, "newC": 75, "retC": 271, "newCP": 47, "retCP": 227, "offline": 5885, "offlineP": 3294, "rej": 0.29, "rejP": 0.36, "awtRate": 50.74, "awtRateP": 48.33, "prep": 496, "prepP": 511, "contact": 0.58, "ready": 99.7, "awtAvg": 3.0, "awtTotal": 328.0, "awtN": 109, "ded": 2, "dedAmt": 6.101, "dedReasons": {"Missing Item - Vendor": 2}, "comp": 2, "canc": 9, "rating": 4.1, "ratingN": 25, "hours": [0, 0, 0, 0, 0, 0, 12, 19, 51, 47, 44, 23, 15, 6, 6, 5, 5, 13, 25, 32, 19, 12, 3, 0], "daily": [19.261, 58.53, 44.4, 5.2, 31.302, 35.241, 33.053, 37.181, 79.922, 79.771, 26.151, 29.333, 7.96, 15.44, 31.433, 112.794, 62.2, 33.021, 36.814, 22.031, 18.2, 33.922, 71.862, 77.663, 74.707, 33.555, 28.632, 64.432, 45.862, 28.941, 53.613], "contactP": 0.36, "readyP": 97.77}, {"id": "677751", "name": "المالكية", "rev": 1915.937, "revP": 1404.901, "ord": 469, "ordP": 350, "aov": 4.09, "aovP": 4.01, "items": 3.55, "itemsP": 3.24, "cash": 442.137, "online": 1473.8, "cashOrd": 99, "net": 1322.243, "com": 394.621, "visitors": 31597, "explorers": 2078, "carts": 658, "buyers": 454, "visitorsP": 28676, "buyersP": 345, "newC": 90, "retC": 382, "newCP": 57, "retCP": 293, "offline": 1205, "offlineP": 599, "rej": 0.21, "rejP": 0.0, "awtRate": 34.33, "awtRateP": 33.52, "prep": 526, "prepP": 485, "contact": 0.21, "ready": 97.85, "awtAvg": 3.0, "awtTotal": 261.0, "awtN": 87, "ded": 1, "dedAmt": 1.0, "dedReasons": {"Missing Item - Vendor": 1}, "comp": 1, "canc": 3, "rating": 4.1, "ratingN": 38, "hours": [0, 0, 0, 0, 0, 0, 17, 37, 55, 73, 84, 37, 26, 10, 11, 9, 7, 12, 26, 34, 18, 9, 4, 0], "daily": [48.751, 126.254, 68.326, 27.683, 22.921, 49.943, 32.193, 50.021, 143.822, 60.451, 23.071, 38.311, 41.815, 40.861, 84.258, 84.001, 55.602, 46.531, 35.71, 50.093, 37.662, 48.504, 135.897, 56.884, 45.971, 47.221, 36.193, 58.761, 53.774, 181.479, 82.973], "contactP": 0.29, "readyP": 94.27}], "dailyRev": [319.12, 834.385, 602.537, 319.14, 395.279, 441.854, 316.219, 420.714, 931.935, 612.209, 264.143, 342.008, 359.59, 273.306, 446.463, 880.62, 696.159, 350.682, 348.715, 372.446, 379.747, 404.322, 906.311, 667.94, 445.502, 425.597, 431.67, 423.274, 516.457, 976.713, 665.054], "dailyOrd": [84, 190, 138, 89, 102, 101, 92, 104, 203, 154, 81, 94, 102, 79, 111, 207, 151, 94, 100, 103, 106, 105, 206, 164, 95, 115, 106, 114, 121, 206, 155], "dailyRevSep": [346.51, 322.858, 462.243, 530.407, 472.871, 328.508, 360.186, 312.858, 258.666, 393.631, 764.102, 373.235, 199.299, 212.236, 334.679, 267.482, 400.668, 809.137, 570.144, 353.8, 324.394, 331.808, 346.529, 458.056, 800.555, 521.957, 328.429, 362.979, 337.034, 358.941], "hours": [0, 0, 0, 0, 0, 0, 176, 359, 494, 560, 493, 293, 171, 92, 70, 52, 56, 127, 245, 273, 219, 128, 64, 0], "hoursRev": [0, 0, 0, 0, 0, 0, 730.78, 1484.65, 2346.29, 2467.26, 2153.61, 1168.69, 701.76, 363.02, 231.7, 158.85, 182.78, 409.17, 911.69, 921.64, 861.26, 464.54, 212.42, 0], "wd": [762, 359, 411, 412, 391, 525, 1012], "wdAvg": [152.4, 89.8, 102.8, 103.0, 97.8, 105.0, 202.4], "wdRevAvg": [648.8, 344.9, 377.9, 401.4, 348.1, 421.4, 906.0], "heat": [[0, 0, 0, 0, 0, 0, 28, 58, 93, 124, 123, 67, 39, 23, 14, 13, 9, 20, 44, 43, 34, 16, 14, 0], [0, 0, 0, 0, 0, 0, 12, 33, 34, 49, 40, 20, 14, 9, 9, 5, 7, 14, 28, 36, 26, 19, 4, 0], [0, 0, 0, 0, 0, 0, 19, 26, 40, 44, 44, 26, 17, 11, 10, 3, 10, 18, 43, 40, 37, 16, 7, 0], [0, 0, 0, 0, 0, 0, 25, 44, 49, 37, 35, 19, 11, 11, 9, 7, 5, 23, 34, 43, 30, 24, 6, 0], [0, 0, 0, 0, 0, 0, 19, 40, 52, 42, 34, 21, 14, 4, 10, 7, 7, 17, 35, 36, 29, 17, 7, 0], [0, 0, 0, 0, 0, 0, 27, 60, 71, 59, 49, 41, 23, 10, 10, 9, 14, 16, 36, 40, 34, 18, 8, 0], [0, 0, 0, 0, 0, 0, 46, 98, 155, 205, 168, 99, 53, 24, 8, 8, 4, 19, 25, 35, 29, 18, 18, 0]], "daypart": [2082, 678, 428, 684, 0], "daypartRev": [9182.6, 2624.0, 1503.6, 2459.9, 0], "basket": [583, 542, 1312, 557, 470, 408], "daypartSep": [1515, 498, 347, 653, 0], "T": {"rev": 15770.110999999999, "revP": 12244.202, "ord": 3872, "ordP": 3013, "net": 10940.003, "com": 3325.994, "cash": 3371.535, "visitors": 229940, "visitorsP": 218755, "explorers": 16864, "carts": 5469, "buyers": 3770, "buyersP": 2938, "newC": 785, "retC": 3113, "newCP": 542, "retCP": 2492, "awtN": 1249, "ded": 27, "dedAmt": 45.888, "comp": 22, "canc": 26, "items": 12407.16, "itemsP": 8959.630000000001, "prep": 519.7760847107438, "awtRate": 52.25902892561983, "awtRateP": 50.40538001991371, "offline": 912708}}, "jb": {"branches": [{"id": "653357", "name": "عالي", "rev": 281.8, "revP": 200.2, "ord": 49, "ordP": 31, "aov": 5.75, "aovP": 6.46, "items": 1.2, "itemsP": 1.35, "cash": 94.0, "online": 187.8, "cashOrd": 16, "net": 195.686, "com": 58.863, "visitors": 2740, "explorers": 203, "carts": 58, "buyers": 46, "visitorsP": 6231, "buyersP": 30, "newC": 12, "retC": 37, "newCP": 9, "retCP": 22, "offline": 3108, "offlineP": 2299, "rej": 0.0, "rejP": 0.0, "awtRate": 48.98, "awtRateP": 58.06, "prep": 899, "prepP": 966, "contact": 0.0, "ready": 95.92, "awtAvg": 3.3, "awtTotal": 50.0, "awtN": 15, "ded": 1, "dedAmt": 3.5, "dedReasons": {"Cooking instructions were not followed": 1}, "comp": 0, "canc": 0, "rating": 4.2, "ratingN": 6, "hours": [0, 0, 0, 0, 0, 0, 1, 6, 10, 9, 4, 6, 4, 3, 2, 0, 1, 0, 0, 1, 1, 1, 0, 0], "daily": [14.8, 20.5, 12.9, 9.4, 10.8, 0, 14.0, 13.5, 7.0, 10.5, 3.5, 0, 16.9, 3.5, 29.6, 16.4, 22.3, 0, 0, 3.5, 7.0, 7.3, 9.4, 3.5, 0, 0, 3.5, 0, 27.5, 14.5, 0], "contactP": 0.0, "readyP": 100.0}, {"id": "653363", "name": "مدينة حمد", "rev": 527.4, "revP": 407.5, "ord": 97, "ordP": 79, "aov": 5.44, "aovP": 5.16, "items": 1.25, "itemsP": 1.23, "cash": 130.4, "online": 397.0, "cashOrd": 19, "net": 360.407, "com": 108.129, "visitors": 7339, "explorers": 524, "carts": 124, "buyers": 96, "visitorsP": 5886, "buyersP": 78, "newC": 28, "retC": 69, "newCP": 31, "retCP": 49, "offline": 3791, "offlineP": 1498, "rej": 0.0, "rejP": 1.25, "awtRate": 51.55, "awtRateP": 46.84, "prep": 728, "prepP": 722, "contact": 0.0, "ready": 98.97, "awtAvg": 3.1, "awtTotal": 98.0, "awtN": 32, "ded": 0, "dedAmt": 0, "dedReasons": {}, "comp": 0, "canc": 0, "rating": 3.5, "ratingN": 9, "hours": [0, 0, 0, 0, 0, 0, 5, 11, 21, 19, 26, 2, 3, 2, 0, 0, 1, 2, 3, 0, 2, 0, 0, 0], "daily": [38.7, 32.4, 14.8, 14.6, 18.2, 3.8, 0, 30.4, 26.9, 33.6, 3.5, 7.2, 3.5, 11.0, 7.0, 30.4, 14.8, 26.1, 21.8, 18.0, 11.0, 37.6, 17.5, 25.1, 7.3, 36.9, 3.5, 3.5, 0, 21.3, 7.0], "contactP": 1.25, "readyP": 100.0}, {"id": "653364", "name": "زنج", "rev": 1502.2, "revP": 1423.26, "ord": 287, "ordP": 261, "aov": 5.23, "aovP": 5.45, "items": 1.21, "itemsP": 1.26, "cash": 145.3, "online": 1356.9, "cashOrd": 31, "net": 1025.785, "com": 310.107, "visitors": 19873, "explorers": 1748, "carts": 366, "buyers": 281, "visitorsP": 22278, "buyersP": 255, "newC": 86, "retC": 201, "newCP": 74, "retCP": 189, "offline": 2550, "offlineP": 2273, "rej": 0.0, "rejP": 0.38, "awtRate": 53.31, "awtRateP": 55.94, "prep": 509, "prepP": 526, "contact": 0.35, "ready": 95.12, "awtAvg": 3.5, "awtTotal": 317.0, "awtN": 91, "ded": 1, "dedAmt": 3.5, "dedReasons": {"Wrong item": 1}, "comp": 0, "canc": 0, "rating": 4.3, "ratingN": 24, "hours": [0, 0, 0, 0, 0, 0, 13, 31, 70, 73, 38, 27, 10, 7, 3, 1, 2, 2, 3, 1, 3, 2, 1, 0], "daily": [74.7, 56.1, 23.4, 47.9, 64.6, 27.7, 59.2, 67.7, 31.9, 26.9, 45.0, 61.1, 68.6, 17.8, 97.6, 31.3, 26.9, 58.5, 38.1, 41.8, 24.6, 112.9, 10.5, 21.0, 53.1, 57.6, 46.5, 64.9, 77.9, 28.1, 38.3], "contactP": 0.38, "readyP": 95.79}, {"id": "653366", "name": "القدم / جبلة حبشي", "rev": 969.9, "revP": 554.4, "ord": 182, "ordP": 121, "aov": 5.33, "aovP": 4.58, "items": 1.31, "itemsP": 1.2, "cash": 98.9, "online": 871.0, "cashOrd": 18, "net": 660.246, "com": 198.534, "visitors": 10675, "explorers": 814, "carts": 218, "buyers": 175, "visitorsP": 7653, "buyersP": 112, "newC": 73, "retC": 111, "newCP": 29, "retCP": 94, "offline": 714, "offlineP": 2516, "rej": 1.09, "rejP": 0.81, "awtRate": 62.09, "awtRateP": 66.94, "prep": 570, "prepP": 546, "contact": 0.0, "ready": 98.9, "awtAvg": 3.1, "awtTotal": 259.0, "awtN": 84, "ded": 0, "dedAmt": 0, "dedReasons": {}, "comp": 0, "canc": 2, "rating": 4.0, "ratingN": 13, "hours": [0, 0, 0, 0, 0, 0, 3, 14, 38, 50, 41, 17, 1, 4, 1, 0, 2, 3, 3, 3, 1, 1, 0, 0], "daily": [29.4, 18.3, 7.0, 29.3, 31.7, 24.8, 29.3, 46.7, 57.2, 18.1, 21.0, 25.0, 47.2, 42.8, 63.2, 56.2, 10.5, 28.4, 17.5, 41.4, 14.9, 96.6, 23.4, 18.1, 22.8, 25.6, 10.8, 43.6, 40.5, 28.6, 0], "contactP": 0.0, "readyP": 97.52}, {"id": "653367", "name": "سند", "rev": 2187.3, "revP": 1823.5, "ord": 407, "ordP": 352, "aov": 5.37, "aovP": 5.18, "items": 1.33, "itemsP": 1.22, "cash": 322.4, "online": 1864.9, "cashOrd": 57, "net": 1503.243, "com": 451.878, "visitors": 30745, "explorers": 2296, "carts": 513, "buyers": 398, "visitorsP": 29275, "buyersP": 343, "newC": 79, "retC": 330, "newCP": 64, "retCP": 288, "offline": 4559, "offlineP": 5573, "rej": 0.24, "rejP": 0.0, "awtRate": 47.91, "awtRateP": 55.4, "prep": 601, "prepP": 587, "contact": 0.49, "ready": 97.79, "awtAvg": 3.4, "awtTotal": 446.0, "awtN": 130, "ded": 1, "dedAmt": 4.0, "dedReasons": {"Wrong item": 1}, "comp": 1, "canc": 2, "rating": 4.8, "ratingN": 6, "hours": [0, 0, 0, 0, 0, 0, 23, 50, 60, 95, 59, 40, 18, 8, 13, 6, 4, 3, 1, 13, 8, 5, 1, 0], "daily": [71.2, 88.4, 77.0, 71.8, 47.3, 73.6, 39.0, 94.1, 87.0, 28.5, 51.4, 70.8, 46.6, 89.4, 103.4, 86.9, 86.1, 58.0, 48.4, 39.4, 61.1, 79.9, 90.5, 88.5, 35.4, 119.0, 86.3, 46.8, 63.7, 89.5, 68.3], "contactP": 0.0, "readyP": 98.3}, {"id": "653368", "name": "سار", "rev": 393.2, "revP": 497.1, "ord": 78, "ordP": 101, "aov": 5.04, "aovP": 4.92, "items": 1.21, "itemsP": 1.19, "cash": 21.3, "online": 371.9, "cashOrd": 6, "net": 263.572, "com": 80.905, "visitors": 6099, "explorers": 404, "carts": 108, "buyers": 77, "visitorsP": 10126, "buyersP": 103, "newC": 22, "retC": 56, "newCP": 25, "retCP": 78, "offline": 837315, "offlineP": 16890, "rej": 0.0, "rejP": 1.94, "awtRate": 60.26, "awtRateP": 53.47, "prep": 645, "prepP": 646, "contact": 0.0, "ready": 97.44, "awtAvg": 4.0, "awtTotal": 115.0, "awtN": 29, "ded": 1, "dedAmt": 0.438, "dedReasons": {"Missing Item": 1}, "comp": 0, "canc": 0, "rating": 3.5, "ratingN": 10, "hours": [0, 0, 0, 0, 0, 0, 1, 7, 14, 18, 15, 5, 7, 3, 1, 0, 0, 1, 1, 3, 1, 0, 1, 0], "daily": [11.1, 35.4, 54.9, 10.8, 17.8, 17.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7.0, 28.3, 20.2, 3.5, 17.5, 14.3, 16.4, 21.3, 68.6, 26.9, 21.7], "contactP": 0.0, "readyP": 98.02}, {"id": "653369", "name": "المحرق", "rev": 2276.7, "revP": 2220.28, "ord": 438, "ordP": 429, "aov": 5.2, "aovP": 5.18, "items": 1.27, "itemsP": 1.23, "cash": 276.1, "online": 2000.6, "cashOrd": 49, "net": 1547.639, "com": 467.082, "visitors": 30689, "explorers": 2344, "carts": 562, "buyers": 431, "visitorsP": 33460, "buyersP": 419, "newC": 93, "retC": 349, "newCP": 96, "retCP": 336, "offline": 6208, "offlineP": 5946, "rej": 0.23, "rejP": 0.46, "awtRate": 50.91, "awtRateP": 55.48, "prep": 568, "prepP": 572, "contact": 0.0, "ready": 98.86, "awtAvg": 2.5, "awtTotal": 367.0, "awtN": 145, "ded": 0, "dedAmt": 0, "dedReasons": {}, "comp": 0, "canc": 4, "rating": 4.6, "ratingN": 21, "hours": [0, 0, 0, 0, 0, 0, 17, 44, 86, 94, 56, 48, 18, 14, 10, 8, 1, 5, 11, 15, 7, 3, 1, 0], "daily": [91.7, 70.3, 102.1, 48.3, 68.4, 32.3, 48.5, 49.6, 87.1, 31.8, 76.2, 38.6, 68.0, 73.4, 106.4, 67.5, 88.2, 58.5, 35.4, 65.8, 39.4, 92.8, 104.9, 51.7, 71.9, 89.4, 80.2, 68.3, 179.5, 102.1, 88.4], "contactP": 0.23, "readyP": 98.6}, {"id": "677778", "name": "المالكية", "rev": 672.7, "revP": 592.36, "ord": 126, "ordP": 115, "aov": 5.34, "aovP": 5.15, "items": 1.44, "itemsP": 1.37, "cash": 114.6, "online": 558.1, "cashOrd": 22, "net": 461.695, "com": 138.978, "visitors": 9730, "explorers": 689, "carts": 169, "buyers": 123, "visitorsP": 8933, "buyersP": 114, "newC": 37, "retC": 89, "newCP": 23, "retCP": 92, "offline": 7, "offlineP": 598, "rej": 0.0, "rejP": 0.0, "awtRate": 46.03, "awtRateP": 46.09, "prep": 840, "prepP": 825, "contact": 0.0, "ready": 99.21, "awtAvg": 2.2, "awtTotal": 79.0, "awtN": 36, "ded": 1, "dedAmt": 1.6, "dedReasons": {"Wrong item": 1}, "comp": 0, "canc": 0, "rating": 4.5, "ratingN": 12, "hours": [0, 0, 0, 0, 0, 0, 5, 13, 19, 29, 18, 17, 5, 1, 2, 0, 0, 1, 3, 5, 5, 2, 1, 0], "daily": [32.8, 48.5, 28.6, 27.9, 11.0, 15.1, 23.5, 21.5, 14.3, 31.2, 14.8, 37.5, 5.6, 14.3, 19.9, 22.7, 18.6, 19.9, 24.0, 14.0, 8.1, 17.5, 15.1, 18.4, 7.0, 14.0, 40.8, 38.8, 38.1, 22.2, 7.0], "contactP": 0.87, "readyP": 97.39}], "dailyRev": [364.4, 369.9, 320.7, 260.0, 269.8, 194.8, 213.5, 323.5, 311.4, 180.6, 215.4, 240.2, 256.4, 252.2, 427.1, 311.4, 267.4, 249.4, 185.2, 223.9, 173.1, 472.9, 291.5, 229.8, 215.0, 356.8, 288.0, 287.2, 495.8, 333.2, 230.7], "dailyOrd": [61, 72, 60, 53, 53, 35, 42, 62, 61, 38, 44, 47, 54, 53, 72, 56, 46, 52, 41, 42, 39, 77, 52, 48, 43, 60, 50, 59, 85, 67, 40], "dailyRevSep": [240.6, 203.3, 324.2, 266.76, 235.1, 201.8, 240.7, 243.38, 278.4, 404.06, 273.6, 208.8, 189.3, 163.2, 179.8, 250.6, 360.6, 226.8, 227.7, 158.6, 160.8, 254.6, 309.6, 427.9, 263.0, 271.2, 260.4, 287.9, 297.5, 308.4], "hours": [0, 0, 0, 0, 0, 0, 68, 176, 318, 387, 257, 162, 66, 42, 32, 15, 11, 17, 25, 41, 28, 14, 5, 0], "hoursRev": [0, 0, 0, 0, 0, 0, 414.7, 966.0, 1891.5, 2054.3, 1226.1, 774.6, 313.9, 211.4, 157.6, 69.8, 48.5, 85.4, 134.1, 212.8, 157.4, 75.6, 17.5, 0], "wd": [232, 192, 201, 181, 193, 357, 308], "wdAvg": [46.4, 48.0, 50.2, 45.2, 48.2, 71.4, 61.6], "wdRevAvg": [245.8, 234.9, 263.0, 240.8, 231.5, 416.7, 323.5], "heat": [[0, 0, 0, 0, 0, 0, 12, 15, 32, 45, 40, 30, 15, 11, 8, 3, 3, 4, 3, 5, 4, 1, 1, 0], [0, 0, 0, 0, 0, 0, 9, 23, 37, 53, 28, 18, 2, 5, 3, 0, 0, 2, 0, 8, 3, 1, 0, 0], [0, 0, 0, 0, 0, 0, 6, 18, 41, 51, 31, 12, 4, 5, 6, 1, 1, 3, 6, 4, 9, 3, 0, 0], [0, 0, 0, 0, 0, 0, 6, 21, 39, 47, 27, 20, 6, 2, 0, 1, 1, 2, 1, 3, 2, 2, 1, 0], [0, 0, 0, 0, 0, 0, 5, 23, 35, 43, 30, 18, 9, 2, 1, 2, 2, 4, 5, 7, 6, 0, 1, 0], [0, 0, 0, 0, 0, 0, 19, 48, 92, 76, 48, 33, 9, 6, 3, 1, 2, 2, 5, 8, 1, 4, 0, 0], [0, 0, 0, 0, 0, 0, 11, 28, 42, 72, 53, 31, 21, 11, 11, 7, 2, 0, 5, 6, 3, 3, 2, 0]], "daypart": [1206, 317, 53, 88, 0], "daypartRev": [6552.6, 1527.3, 268.0, 463.3, 0], "basket": [4, 1, 1055, 87, 22, 495], "daypartSep": [1059, 285, 44, 101, 0], "T": {"rev": 8811.2, "revP": 7718.6, "ord": 1664, "ordP": 1489, "net": 6018.273, "com": 1814.476, "cash": 1203.0, "visitors": 117890, "visitorsP": 123842, "explorers": 9022, "carts": 2118, "buyers": 1627, "buyersP": 1454, "newC": 430, "retC": 1242, "newCP": 351, "retCP": 1148, "awtN": 562, "ded": 5, "dedAmt": 13.038, "comp": 1, "canc": 8, "items": 2139.13, "itemsP": 1847.93, "prep": 609.3936298076923, "awtRate": 51.86221754807692, "awtRateP": 55.20674278038952, "offline": 858252}}}, "jahez": {"branches": [{"name": "زنج", "ord": 107, "rev": 466.14, "to": 4, "toAmt": 14.4, "daily": [2.2, 24.95, 17.5, 7.6, 13.77, 0.0, 10.9, 29.52, 4.33, 36.14, 14.8, 22.73, 3.93, 19.93, 15.33, 12.6, 13.4, 13.45, 12.39, 23.16, 17.2, 14.37, 25.93, 24.0, 2.2, 10.5, 10.72, 14.7, 17.1, 25.39, 5.4]}, {"name": "سار", "ord": 19, "rev": 84.4, "to": 38, "toAmt": 172.0, "daily": [0.0, 0.0, 23.3, 7.85, 0.0, 5.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 4.2, 6.2, 4.8, 4.9, 8.35, 10.1, 0.0, 2.8, 0.0, 6.8]}, {"name": "القدم / جبلة حبشي", "ord": 61, "rev": 248.0, "to": 0, "toAmt": 0.0, "daily": [7.2, 8.82, 13.78, 0.0, 12.95, 4.1, 0.0, 0.0, 22.75, 17.26, 15.34, 0.0, 7.5, 4.9, 2.73, 9.43, 0.0, 4.9, 4.83, 2.96, 7.5, 8.1, 17.45, 2.9, 2.2, 2.0, 12.5, 2.39, 5.53, 24.46, 23.52]}, {"name": "عالي", "ord": 53, "rev": 224.29, "to": 0, "toAmt": 0.0, "daily": [13.45, 15.55, 28.25, 4.75, 0.0, 0.0, 0.0, 0.0, 18.3, 11.85, 0.0, 11.74, 2.1, 0.0, 0.0, 11.8, 3.58, 8.3, 0.0, 0.0, 8.4, 11.39, 12.9, 12.89, 0.0, 7.8, 14.4, 4.9, 5.5, 16.44, 0.0]}, {"name": "المالكية", "ord": 49, "rev": 176.52, "to": 0, "toAmt": 0.0, "daily": [2.0, 0.0, 13.69, 2.8, 0.0, 0.0, 11.25, 5.43, 20.45, 2.0, 4.18, 2.0, 8.5, 8.85, 2.2, 22.93, 6.0, 5.9, 3.04, 3.3, 9.7, 3.7, 4.8, 11.6, 4.7, 5.4, 0.0, 0.0, 2.35, 9.75, 0.0]}, {"name": "مدينة حمد", "ord": 39, "rev": 154.38, "to": 0, "toAmt": 0.0, "daily": [7.09, 10.33, 5.5, 5.25, 0.0, 0.0, 5.69, 5.15, 17.7, 12.33, 2.5, 11.78, 6.2, 2.0, 4.18, 7.3, 10.25, 0.0, 2.4, 0.0, 0.0, 0.0, 12.0, 0.0, 4.6, 0.0, 0.0, 5.16, 4.15, 0.0, 12.82]}], "dailyRev": [31.94, 59.65, 102.02, 28.25, 26.72, 9.2, 27.84, 40.1, 83.53, 79.58, 36.82, 48.25, 28.23, 35.68, 24.44, 64.06, 33.23, 32.55, 22.66, 29.42, 42.8, 41.76, 79.28, 56.19, 18.6, 34.05, 47.72, 27.15, 37.43, 76.04, 48.54], "dailyTo": [0, 0, 0, 0, 0, 1, 7, 3, 2, 0, 1, 2, 6, 5, 2, 2, 2, 6, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0], "hours": [0, 0, 0, 0, 0, 0, 15, 34, 35, 44, 51, 24, 13, 14, 8, 4, 5, 11, 14, 21, 16, 13, 6, 0], "rev": 1353.73, "ord": 328, "to": 42, "toAmt": 186.4, "canc": 1, "received": 371}, "pos": {"total": 49945.76, "n": 18273, "ch": {"store": [12278, 23319.16], "tf": [3880, 15830.7], "tj": [1668, 8846.9], "jf": [327, 1351.55], "jj": [70, 356.9], "af": [33, 160.45], "aj": [17, 80.1]}, "pay": {"Pay by Card Machine": [8039, 16695.09], "Cash": [3486, 5014.65], "BenefitPay App": [749, 1344.42], "Cash by benefit": [4, 265.0]}, "dine": [1833, 5561.775], "branches": [{"name": "سند", "total": 8822.09, "n": 3326, "store": 3825.78, "tf": 2683.69, "tj": 2200.7, "jf": 0.0, "jj": 76.6, "af": 18.22, "aj": 17.1, "storeN": 2210, "daily": [244.73, 391.76, 274.2, 279.43, 218.22, 327.12, 204.21, 274.46, 367.97, 190.62, 192.6, 284.49, 237.43, 250.81, 301.06, 374.01, 382.59, 240.56, 200.1, 219.12, 274.91, 318.65, 438.05, 270.15, 263.2, 309.07, 282.08, 246.07, 267.64, 381.26, 315.52]}, {"name": "المالكية", "total": 6829.66, "n": 2287, "store": 3979.55, "tf": 1920.99, "tj": 674.3, "jf": 176.52, "jj": 67.0, "af": 11.3, "aj": 0.0, "storeN": 1629, "daily": [206.85, 364.95, 255.81, 146.48, 134.98, 174.54, 159.84, 200.65, 329.17, 275.15, 146.85, 210.26, 137.91, 138.11, 287.55, 364.53, 215.35, 207.78, 155.85, 155.44, 153.11, 215.2, 376.84, 204.13, 173.3, 142.32, 208.59, 202.16, 220.12, 406.67, 259.17]}, {"name": "القدم / جبلة حبشي", "total": 6675.56, "n": 2281, "store": 2855.53, "tf": 2488.15, "tj": 976.9, "jf": 248.0, "jj": 42.5, "af": 49.38, "aj": 15.1, "storeN": 1420, "daily": [179.26, 205.56, 178.0, 157.9, 211.63, 136.75, 205.39, 256.17, 384.32, 269.09, 179.97, 197.09, 258.43, 200.35, 296.65, 354.89, 269.53, 257.78, 162.12, 209.42, 141.95, 270.2, 262.52, 177.1, 114.78, 125.33, 157.73, 156.88, 252.28, 254.45, 192.04]}, {"name": "زنج", "total": 6031.915, "n": 2289, "store": 2156.925, "tf": 1811.25, "tj": 1501.9, "jf": 473.64, "jj": 74.8, "af": 13.4, "aj": 0.0, "storeN": 1422, "daily": [176.3, 267.78, 154.82, 209.24, 199.92, 147.53, 159.88, 239.19, 192.9, 223.22, 166.0, 170.29, 187.58, 155.35, 264.5, 223.02, 146.1, 198.75, 172.79, 208.91, 188.95, 221.37, 197.53, 203.1, 149.65, 202.86, 150.62, 198.18, 238.4, 246.31, 170.88]}, {"name": "المحرق", "total": 5954.76, "n": 1493, "store": 666.75, "tf": 2917.92, "tj": 2288.1, "jf": 0.0, "jj": 45.5, "af": 22.49, "aj": 14.0, "storeN": 340, "daily": [188.46, 245.23, 310.17, 120.68, 197.86, 143.75, 139.65, 122.73, 288.3, 176.24, 143.83, 101.65, 170.68, 154.76, 164.21, 279.44, 286.27, 134.12, 158.2, 143.14, 115.91, 201.23, 285.93, 198.68, 151.37, 185.67, 160.7, 188.03, 278.53, 289.35, 229.99]}, {"name": "عالي", "total": 4994.735, "n": 1841, "store": 3361.675, "tf": 1090.15, "tj": 285.0, "jf": 218.01, "jj": 36.0, "af": 3.9, "aj": 0.0, "storeN": 1456, "daily": [120.3, 231.37, 142.63, 111.04, 218.5, 166.35, 143.55, 152.1, 392.16, 151.62, 94.33, 108.1, 200.57, 95.45, 207.69, 235.0, 139.39, 104.58, 119.29, 131.29, 151.9, 130.59, 242.37, 201.09, 88.5, 107.73, 134.9, 105.6, 185.83, 283.27, 97.65]}, {"name": "مدينة حمد", "total": 4877.16, "n": 1943, "store": 2846.55, "tf": 1334.27, "tj": 526.8, "jf": 150.98, "jj": 0.0, "af": 15.06, "aj": 3.5, "storeN": 1466, "daily": [163.45, 217.56, 136.7, 94.0, 139.05, 148.44, 130.04, 153.88, 239.72, 183.9, 85.85, 125.91, 104.36, 110.99, 154.41, 334.44, 185.45, 129.42, 148.61, 154.83, 102.2, 176.62, 224.22, 194.66, 167.3, 164.9, 113.38, 148.74, 141.61, 153.24, 149.28]}, {"name": "سار", "total": 3094.66, "n": 1095, "store": 1339.58, "tf": 1210.38, "tj": 393.2, "jf": 84.4, "jj": 14.5, "af": 22.2, "aj": 30.4, "storeN": 709, "daily": [117.8, 251.1, 240.7, 119.3, 133.7, 148.45, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 121.35, 168.85, 292.68, 208.38, 142.12, 187.09, 163.72, 159.18, 189.75, 208.27, 242.22]}, {"name": "سترة", "total": 2665.22, "n": 1718, "store": 2286.82, "tf": 373.9, "tj": 0.0, "jf": 0.0, "jj": 0.0, "af": 4.5, "aj": 0.0, "storeN": 1626, "daily": [47.4, 132.55, 103.0, 57.85, 34.2, 70.1, 79.6, 67.8, 123.4, 96.8, 62.0, 64.9, 87.02, 91.25, 80.7, 115.9, 88.5, 108.3, 80.75, 92.95, 55.25, 105.75, 112.0, 90.05, 59.5, 97.65, 73.65, 54.5, 81.6, 166.95, 83.35]}], "daily": {"store": [704.1, 1031.35, 762.6, 668.65, 775.75, 785.5, 617.6, 633.6, 972.3, 682.67, 529.3, 615.72, 706.92, 618.8, 835.1, 986.4, 701.0, 726.49, 633.75, 665.05, 686.5, 870.7, 1117.94, 779.95, 611.71, 698.1, 673.65, 701.8, 791.88, 946.95, 787.32], "del": [740.45, 1276.51, 1033.43, 627.27, 712.31, 677.53, 604.56, 833.38, 1345.64, 883.97, 542.13, 646.96, 677.06, 578.27, 921.67, 1294.83, 1012.18, 654.8, 563.96, 650.05, 619.03, 937.76, 1314.2, 967.39, 698.01, 824.52, 771.72, 757.54, 1063.88, 1442.82, 952.77]}, "hours": {"store": [0.0, 0.0, 0.0, 0.0, 0.0, 24.5, 1006.9, 2779.2, 3026.6, 3091.2, 2624.4, 1481.2, 1090.1, 672.0, 521.0, 395.8, 418.1, 527.6, 1094.6, 1482.0, 1493.8, 1014.7, 573.2, 2.5], "del": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 167.3, 1000.5, 2096.5, 2973.6, 4039.3, 2851.4, 2556.9, 1681.9, 661.8, 197.0, 361.7, 1062.5, 891.9, 1807.2, 2105.2, 1392.5, 779.3, 0.0]}, "saarDay": 182.04}};
+const META = {
+  fba:{name:"فريج بن عاقول", tag:"أصالة الماضي، بإبداع الحاضر", lost:995},
+  jb:{name:"JUST BUNS", tag:"تقرير مستقل عن فريج بن عاقول", lost:324}
 };
-const LAB={muharraq:[0,-16,"middle"],sanad:[0,-16,"middle"],zinj:[0,-16,"middle"],qadam:[0,-16,"middle"],hamad:[-14,5,"start"],aali:[14,5,"end"],malkiya:[-14,5,"start"],saar:[-14,5,"start"]};
-let state="after", saarTo="qadam", rec=0.6;
+const WD=["السبت","الأحد","الإثنين","الثلاثاء","الأربعاء","الخميس","الجمعة"];
+const DP=["الفطور ٥–١١ص","الغداء ١١–٤م","العصر ٤–٧م","المساء ٧م–١٢"];
 const fmt=(n,d=0)=>Number(n).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
+const bhd=(n,d=0)=>`<span class="num">${fmt(n,d)}</span> <small>د.ب</small>`;
+const css=n=>getComputedStyle(document.body).getPropertyValue(n).trim();
 const N=s=>`<span class="num">${s}</span>`;
-function km(a,b){const r=Math.PI/180,[la1,lo1]=B[a].ll,[la2,lo2]=B[b].ll;const h=Math.sin((la2-la1)*r/2)**2+Math.cos(la1*r)*Math.cos(la2*r)*Math.sin((lo2-lo1)*r/2)**2;return 6371*2*Math.asin(Math.sqrt(h));}
-function dest(k){return k==="saar"?saarTo:"hamad";}
-function after(){
-  const o={}; for(const k in B) o[k]={ord:B[k].close?0:B[k].ord, rev:B[k].close?0:B[k].rev, inc:0};
-  for(const k in B) if(B[k].close){const d=dest(k); o[d].ord+=B[k].ord*rec; o[d].rev+=B[k].rev*rec; o[d].inc+=B[k].ord*rec;}
-  return o;
+const ICON={
+  ok:'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".15"/><path d="M5 8.2l2 2 4-4.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  warn:'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="currentColor" opacity=".15"/><path d="M8 4.5v4.2M8 11.2v.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+  closed:'<svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect x="3" y="7" width="22" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M3 12h22M9 4v5M19 4v5M10 16l8 4M18 16l-8 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+};
+const RN={"Missing Item - Vendor":"صنف ناقص","Missing Item":"صنف ناقص","Wrong item":"صنف خاطئ","Food quality":"جودة الطعام","Foreign Object":"جسم غريب","Cooking instructions were not followed":"عدم اتباع ملاحظات الزبون"};
+let brand="fba", charts=[], sortKey="rev", sortDir=-1, selected=null, rankMetric="rev", opsKey="rev", opsDir=-1;
+try{const s=localStorage.getItem("tal-view"); if(["fba","jb","all"].includes(s)) brand=s;}catch(e){}
+const ALL=[...DATA.brands.fba.branches.map(b=>({...b,brand:"fba"})),...DATA.brands.jb.branches.map(b=>({...b,brand:"jb"}))];
+function killCharts(){charts.forEach(c=>c.destroy()); charts=[];}
+function mk(id,cfg){const el=document.getElementById(id); if(!el||!window.Chart) return; charts.push(new Chart(el,cfg));}
+function baseOpts(extra={}){
+  const ink=css("--muted"), line=css("--line");
+  return Object.assign({responsive:true,maintainAspectRatio:false,animation:{duration:500},
+    plugins:{legend:{display:false},tooltip:{rtl:true,textDirection:"rtl",backgroundColor:css("--ink"),titleColor:css("--paper"),bodyColor:css("--paper"),padding:10,cornerRadius:8,displayColors:false,titleFont:{family:"IBM Plex Sans Arabic"},bodyFont:{family:"IBM Plex Sans Arabic"}}},
+    scales:{x:{grid:{display:false},ticks:{color:ink,font:{family:"IBM Plex Sans Arabic",size:11}},border:{color:line}},
+            y:{grid:{color:line},ticks:{color:ink,font:{family:"IBM Plex Sans Arabic",size:11}},border:{display:false},beginAtZero:true}}},extra);
 }
-function draw(){
-  const A=after(), aft=state==="after";
-  let s=`<path d="${COAST}" fill="var(--land)" stroke="var(--coast)" stroke-width="1.5" stroke-linejoin="round"/>`;
-  // receiving rings
-  const recv=[...new Set(Object.keys(B).filter(k=>B[k].close).map(dest))];
-  recv.forEach(k=>{const [x,y]=P(...B[k].ll); s+=`<circle class="ring" cx="${x}" cy="${y}" r="${5*KM}" style="opacity:${aft?1:0}"/>`;});
-  // flows
-  if(aft){
-    s+=`<defs><marker id="ah" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--closed)"/></marker></defs>`;
-    for(const k in B) if(B[k].close){
-      const d=dest(k), [x1,y1]=P(...B[k].ll), [x2,y2]=P(...B[d].ll);
-      const mx=(x1+x2)/2, my=(y1+y2)/2, dx=x2-x1, dy=y2-y1, len=Math.hypot(dx,dy), bend=len*0.22;
-      const cx=mx-dy/len*bend, cy=my+dx/len*bend, sh=16/len, ex=x2-dx*sh, ey=y2-dy*sh;
-      const w=Math.max(2.5,Math.sqrt(B[k].ord*rec)*0.55);
-      s+=`<path class="flowline" d="M${x1},${y1} Q${cx},${cy} ${ex},${ey}" stroke-width="${w}" marker-end="url(#ah)"/>`;
-      s+=`<text class="bsub num" x="${cx}" y="${cy}" font-size="13" text-anchor="middle">${fmt(km(k,d),1)} كم</text>`;
-    }
-  }
-  // branches
-  for(const k in B){
-    const b=B[k], [x,y]=P(...b.ll), closed=aft&&b.close;
-    const ord=aft?A[k].ord:b.ord, r=closed?9:Math.max(7,Math.sqrt(ord)*1.15);
-    const isHub=aft&&A[k].inc>0;
-    const fill=closed?"var(--land)":isHub?"var(--hub)":"var(--jb)", stroke=closed?"var(--closed)":isHub?"var(--hub)":"var(--jb)";
-    s+=`<g data-k="${k}" tabindex="0" role="img" aria-label="${b.n}">`;
-    s+=`<circle class="bdot" cx="${x}" cy="${y}" r="${r}" fill="${fill}" fill-opacity="${closed?1:.88}" stroke="${stroke}" stroke-width="2.5"/>`;
-    if(closed) s+=`<path d="M${x-4.5},${y-4.5} L${x+4.5},${y+4.5} M${x+4.5},${y-4.5} L${x-4.5},${y+4.5}" stroke="var(--closed)" stroke-width="2.4" stroke-linecap="round"/>`;
-    const [lx,ly,an]=LAB[k], off=an==="middle"?-r-6:0, ox=an==="middle"?0:(an==="start"?-(r+6):(r+6));
-    s+=`<text class="blabel" x="${x+ox}" y="${y+(an==="middle"?-r-24:5)}" font-size="${isHub?16:14}" text-anchor="${an==="start"?"end":an==="end"?"start":"middle"}" ${closed?'style="fill:var(--closed)"':''}>${b.n.split(" / ")[0]}</text>`;
-    s+=`<text class="bsub num" x="${x+ox}" y="${y+(an==="middle"?-r-8:21)}" font-size="12" text-anchor="${an==="start"?"end":an==="end"?"start":"middle"}">${closed?"مغلق":fmt(ord/31,1)+" طلب/يوم"}</text>`;
-    s+=`</g>`;
-  }
-  // scale bar 5km
-  const sb=5*KM; s+=`<g transform="translate(24,${702.0-26})"><rect x="0" y="0" width="${sb}" height="5" fill="var(--ink)" rx="2"/><text x="${sb/2}" y="-7" font-size="12" text-anchor="middle" fill="var(--muted)" class="num">5 كم</text></g>`;
-  document.getElementById("map").innerHTML=s;
-  bindTips(A);
-  side(A);
+const TT=(cb)=>({...baseOpts().plugins,tooltip:{...baseOpts().plugins.tooltip,callbacks:cb}});
+const wdOf=d=>WD[(d+4)%7]; // 1 Oct 2026 = Thursday
+
+function render(){
+  document.body.dataset.brand=brand;
+  document.querySelectorAll(".switch button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.b===brand));
+  killCharts();
+  if(brand==="all") return renderAll();
+  const B=DATA.brands[brand], T=B.T, M=META[brand], br=B.branches;
+  const aov=T.rev/T.ord, ipo=T.items/T.ord, netPct=T.net/T.rev*100, comPct=T.com/T.rev*100, othPct=100-netPct-comPct;
+  const newShare=T.newC/(T.newC+T.retC)*100;
+  const dpTot=B.daypart.reduce((a,b)=>a+b,0);
+  const peakWd=B.wdAvg.indexOf(Math.max(...B.wdAvg)), lowWd=B.wdAvg.indexOf(Math.min(...B.wdAvg));
+  const peakH=B.hours.indexOf(Math.max(...B.hours));
+  const topB=[...br].sort((a,b)=>b.rev-a.rev);
+  const contact=br.reduce((s,b)=>s+b.contact*b.ord,0)/T.ord;
+
+  document.getElementById("app").innerHTML=`
+  <div class="hero fade">
+    <div>
+      <h1 class="brandname">${M.name}</h1>
+      <p class="tag">${M.tag}</p>
+      <p class="period">مبيعات طلبات لـ ${br.length} فروع خلال أكتوبر 2026 (31 يوماً)</p>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><span class="l">المبيعات</span><span class="v">${bhd(T.rev)}</span><span class="s">${N(fmt(T.rev/31))} د.ب في اليوم</span></div>
+      <div class="kpi"><span class="l">الطلبات المسلّمة</span><span class="v">${N(fmt(T.ord))}</span><span class="s">${N(fmt(T.ord/31))} طلباً في اليوم</span></div>
+      <div class="kpi"><span class="l">متوسط قيمة الطلب</span><span class="v">${bhd(aov,2)}</span><span class="s">${N(fmt(ipo,2))} صنف في الطلب</span></div>
+      <div class="kpi"><span class="l">الصافي المتوقع لك</span><span class="v">${bhd(T.net)}</span><span class="s">${N(fmt(netPct,1)+"%")} من المبيعات بعد العمولة والخصومات</span></div>
+    </div>
+    <div class="verdict">
+      <div class="g"><b>ما يسير جيداً</b>${brand==="fba"
+        ?`${topB[0].name} و${topB[1].name} يقودان بـ ${N(fmt((topB[0].rev+topB[1].rev)/T.rev*100,0)+"%")} من المبيعات، و${N(fmt(100-newShare,0)+"%")} من الطلبات من زبائن عائدين.`
+        :`${topB[0].name} و${topB[1].name} يقودان بـ ${N(fmt((topB[0].rev+topB[1].rev)/T.rev*100,0)+"%")} من المبيعات، وقيمة الطلب ${N(fmt(aov,2))} د.ب أعلى من فريج بن عاقول.`}</div>
+      <div class="w"><b>يحتاج انتباه</b>${brand==="fba"
+        ?`في ${N(fmt(T.awtRate,0)+"%")} من الطلبات ينتظر السائق طلباً غير جاهز. هذا يضر ترتيبك وتقييمك.`
+        :`الزبون يطلب ${N(fmt(ipo,1))} صنف فقط في المتوسط. فرصة كبيرة لرفع قيمة الطلب بالوجبات والإضافات.`}</div>
+      <div class="r"><b>أكبر خسارة</b>فرع سار كان مغلقاً على طلبات ${N("14")} يوماً (7–20 أكتوبر). الخسارة التقديرية نحو ${N(fmt(M.lost))} د.ب.</div>
+    </div>
+  </div>
+
+  <section>
+    <div class="head"><h2>إيقاع الشهر يوماً بيوم</h2><p class="lede">مبيعات كل يوم من أكتوبر. النقاط تمثّل ${brand==="fba"?"أيام الجمعة والسبت":"أيام الخميس والجمعة"}، وهي القمم المتكررة.</p></div>
+    <div class="panel"><div class="chartbox"><canvas id="cDaily" aria-label="المبيعات اليومية"></canvas></div></div>
+    <div class="grid2b">
+      <div class="panel"><h3>متوسط المبيعات حسب يوم الأسبوع</h3><p class="note">${WD[peakWd]} أعلى يوم بمتوسط ${N(fmt(B.wdRevAvg[peakWd]))} د.ب، و${WD[lowWd]} الأدنى بـ ${N(fmt(B.wdRevAvg[lowWd]))} د.ب.</p><div class="chartbox sm"><canvas id="cWd"></canvas></div></div>
+      <div class="panel"><h3>توزيع الطلبات على فترات اليوم</h3><p class="note">الفطور وحده ${N(fmt(B.daypart[0]/dpTot*100,0)+"%")} من الطلبات، وأعلى ساعة هي ${N(peakH+":00")}.</p><div class="chartbox sm"><canvas id="cDp"></canvas></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><h2>متى يطلب زبائنك بالضبط</h2><p class="lede">كل مربع ساعة في يوم من الأسبوع، ولونه يزداد مع عدد الطلبات فيها خلال أكتوبر. استخدمها لتوزيع الموظفين وتوقيت العروض. مرّر المؤشر على أي مربع لرؤية العدد.</p></div>
+    <div class="panel heatwrap"><div class="heatinner" id="heat"></div></div>
+  </section>
+
+  <section>
+    <div class="head"><h2>ترتيب الفروع</h2><p class="lede">اضغط على عنوان أي عمود للترتيب، واضغط على أي فرع لفتح تحليله الكامل ونصائحه الخاصة.</p></div>
+    <div class="tablewrap"><table id="tbl"></table></div>
+    <div id="detail"></div>
+  </section>
+
+  ${brand==="fba"?jahezSection():""}
+
+  <section>
+    <div class="head"><h2>رحلة الزبون من الظهور إلى الطلب</h2><p class="lede">من بين كل من شاهد مطعمك في تطبيق طلبات خلال أكتوبر، كم فتح القائمة، وكم وصل إلى السلة، وكم أكمل الطلب.</p></div>
+    <div class="grid2">
+      <div class="panel funnel" id="funnel"></div>
+      <div class="panel"><h3>زبائن جدد أم عائدون</h3>
+        <p class="note">${N(fmt(100-newShare,0)+"%")} من الطلبات من زبائن عائدين و${N(fmt(newShare,0)+"%")} من زبائن جدد. العائدون قاعدة العمل، والجدد وقود النمو.</p>
+        <div class="chartbox sm"><canvas id="cNew"></canvas></div></div>
+    </div>
+    <div class="panel"><h3>نسبة من فتح القائمة ثم طلب، لكل فرع</h3><p class="note">كلما ارتفعت كانت القائمة والصور والأسعار أكثر إقناعاً. الخط المتقطع متوسط ${M.name}.</p><div class="chartbox sm"><canvas id="cConv"></canvas></div></div>
+  </section>
+
+  <section>
+    <div class="head"><h2>التشغيل والجودة</h2><p class="lede">مؤشرات تراقبها طلبات وتؤثر مباشرة في ظهور مطعمك وترتيبه في نتائج البحث.</p></div>
+    <div class="alert">
+      <span style="color:var(--bad)">${ICON.closed}</span>
+      <div><h3>فرع سار أُغلق على طلبات من 7 إلى 20 أكتوبر</h3>
+      <p>صفر طلبات لمدة 14 يوماً متتالية، وسجّلت طلبات ${N("232")} ساعة توقف للفرع. بمتوسط أيام العمل في الشهر نفسه، الخسارة التقديرية <b class="num">${fmt(M.lost)}</b> د.ب مبيعات (نحو ${N(fmt(M.lost*netPct/100))} د.ب صافٍ).</p></div>
+    </div>
+    <div class="grid2b">
+      <div class="panel"><h3>الانتظار الذي يمكن تفاديه</h3><p class="note">نسبة الطلبات التي وصل فيها السائق ولم يكن الطلب جاهزاً. المعدل العام ${N(fmt(T.awtRate,0)+"%")}.</p><div class="chartbox sm"><canvas id="cAwt"></canvas></div></div>
+      <div class="panel"><h3>متوسط وقت التحضير بالدقائق</h3><p class="note">متوسط ${M.name}: ${N(fmt(T.prep/60,1))} دقيقة.</p><div class="chartbox sm"><canvas id="cPrep"></canvas></div></div>
+    </div>
+    <div class="grid2b">
+      <div class="panel"><h3>تقييم الزبائن في طلبات</h3><div class="chartbox sm"><canvas id="cRate"></canvas></div></div>
+      <div class="panel"><h3>الشكاوى والخصومات</h3>
+        <p class="note">نسبة الطلبات التي تواصل فيها الزبون بشكوى ${N(fmt(contact,2)+"%")}. ${T.ded} طلباً خُصم منها مبلغ بسبب شكوى، بإجمالي ${N(fmt(T.dedAmt,3))} د.ب. المبلغ صغير، لكن كل شكوى تعني زبوناً قد لا يعود.</p>
+        <div id="reasons" style="display:grid;gap:8px;margin-top:12px"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><h2>أين يذهب كل دينار</h2><p class="lede">المبيعات في طلبات هي قيمة الطعام قبل خصومات العروض ورسوم التوصيل. هذا ما يبقى لك منها بعد ما تقتطعه المنصة.</p></div>
+    <div class="panel" style="display:grid;gap:16px">
+      <div class="money">
+        <div style="flex:${netPct};background:var(--good)">الصافي ${N("&nbsp;"+fmt(netPct,1)+"%")}</div>
+        <div style="flex:${comPct};background:var(--accent)">العمولة ${N("&nbsp;"+fmt(comPct,1)+"%")}</div>
+        <div style="flex:${othPct};background:var(--warn)">${N(fmt(othPct,1)+"%")}</div>
+      </div>
+      <div class="mlist">
+        <div><span class="l">صافي لك</span><span class="v">${bhd(T.net)}</span></div>
+        <div><span class="l">عمولة طلبات</span><span class="v">${bhd(T.com)}</span></div>
+        <div><span class="l">خصومات ورسوم أخرى</span><span class="v">${bhd(T.rev-T.net-T.com)}</span></div>
+      </div>
+      <p class="note">الدفع الإلكتروني ${N(fmt(100-T.cash/T.rev*100,0)+"%")} من المبيعات والنقدي ${N(fmt(T.cash/T.rev*100,0)+"%")}. ${brand==="fba"?`عمولة فرع مدينة حمد ${N("24.8%")} مقابل نحو ${N("20.7%")} لبقية الفروع، أي قرابة ${N("55")} د.ب إضافية هذا الشهر. يستحق مراجعة العقد أو الفواتير.`:"نسبة العمولة متقاربة في كل الفروع (20.5–20.9%)."} الأرقام النهائية للتسوية في فواتير طلبات.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><h2>ماذا تفعل الآن</h2><p class="lede">مرتبة حسب الأولوية. الأثر تقديري شهري ومبني على أرقام أكتوبر نفسها.</p></div>
+    <div class="actions" id="actions"></div>
+  </section>
+
+  <section>
+    <div class="head"><h2>محاكي الأثر</h2><p class="lede">حرّك المؤشرات لترى ماذا يعني تحسين بسيط في الأرقام على مبيعات شهر مثل أكتوبر.</p></div>
+    <div class="panel sim">
+      <div class="ctrl">
+        <label for="sConv"><span class="row"><span>زيادة عدد الطلبات (تحويل أعلى أو عروض)</span><output id="oConv" class="num">10%</output></span><input type="range" id="sConv" min="0" max="40" step="1" value="10"></label>
+        <label for="sAov"><span class="row"><span>زيادة متوسط قيمة الطلب</span><output id="oAov" class="num">0.300 د.ب</output></span><input type="range" id="sAov" min="0" max="1.5" step="0.05" value="0.3"></label>
+        <label for="sDays"><span class="row"><span>أيام إغلاق يمكن تفاديها (سار)</span><output id="oDays" class="num">14</output></span><input type="range" id="sDays" min="0" max="14" step="1" value="14"></label>
+      </div>
+      <div class="simout" aria-live="polite">
+        <span class="note">مبيعات إضافية متوقعة في الشهر</span>
+        <span class="big" id="simBig">—</span>
+        <div class="row2"><div>المبيعات الشهرية<b id="simTot">—</b></div><div>صافٍ إضافي لك<b id="simNet">—</b></div></div>
+      </div>
+    </div>
+  </section>
+  ${footer()}`;
+
+  drawCharts(B,T); drawHeat(B); if(brand==="fba") drawJahez(); drawTable(); drawFunnel(T); drawReasons(br); drawActions(B,T); bindSim(B,T);
+  if(selected && br.find(x=>x.id===selected)) showDetail(selected,false); else selected=null;
 }
-function side(A){
-  const closed=Object.keys(B).filter(k=>B[k].close);
-  document.getElementById("flows").innerHTML=closed.map(k=>{const d=dest(k);return `<div class="flow"><span class="from">${B[k].n}<small>${N(fmt(B[k].ord))} طلب شهرياً</small></span><span class="arr"><svg viewBox="0 0 58 12" aria-hidden="true"><path d="M56 6H6M12 1L5 6l7 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>${N(fmt(km(k,d),1))} كم</span><span class="to">${B[d].n.split(" / ")[0]}<small>+${N(fmt(B[k].ord*rec))} طلب</small></span></div>`}).join("");
-  const totB=Object.values(B).reduce((s,b)=>s+b.ord,0), totA=Object.values(A).reduce((s,b)=>s+b.ord,0);
-  const revB=Object.values(B).reduce((s,b)=>s+b.rev,0), revA=Object.values(A).reduce((s,b)=>s+b.rev,0);
-  const lostRev=revB-revA;
-  document.getElementById("stats").innerHTML=[
-    ["مدينة حمد يومياً",N(fmt(B.hamad.ord/31,1)+" → "+fmt(A.hamad.ord/31,1)),"طلب في اليوم"],
-    ["القدم يومياً",N(fmt(B.qadam.ord/31,1)+" → "+fmt(A.qadam.ord/31,1)),"طلب في اليوم"],
-    ["طلبات قد تضيع",N(fmt(totB-totA)),"شهرياً من "+fmt(totB)],
-    ["ربح قد يضيع",N("≈ "+fmt(lostRev*0.38)),"د.ب شهرياً بعد العمولة والطعام"]
-  ].map(([l,v,s])=>`<div class="stat"><span class="l">${l}</span><span class="v">${v}</span><span class="s">${s}</span></div>`).join("");
-  document.getElementById("tbl").innerHTML=`<thead><tr><th>الفرع</th><th>الدور بعد الإغلاق</th><th>طلبات شهرياً قبل</th><th>بعد</th><th>طلب في اليوم بعد</th><th>مبيعات شهرية بعد</th></tr></thead><tbody>${Object.keys(B).sort((a,b)=>(A[b].ord-A[a].ord)||(B[b].ord-B[a].ord)).map(k=>{const b=B[k],a=A[k];
-    const role=b.close?`<span class="pill c">يُغلق ← ${B[dest(k)].n.split(" / ")[0]}</span>`:a.inc>0?`<span class="pill h">يستقبل طلبات ${Object.keys(B).filter(x=>B[x].close&&dest(x)===k).map(x=>B[x].n).join(" و")}</span>`:`<span class="pill k">بلا تغيير</span>`;
-    return `<tr><td><b>${b.n}</b></td><td>${role}</td><td class="num">${fmt(b.ord)}</td><td class="num">${b.close?"—":fmt(a.ord)}${a.inc>0?` <span class="delta">(+${fmt(a.inc)})</span>`:""}</td><td class="num">${b.close?"—":fmt(a.ord/31,1)}</td><td class="num">${b.close?"—":fmt(a.rev)+" د.ب"}</td></tr>`}).join("")}</tbody>`;
+
+function footer(){return `<footer>
+    <span>المصدر: بوابة شركاء طلبات (سجل الطلبات وتقارير الأداء والتشغيل والزبائن والتقييمات)، 1–31 أكتوبر 2026، بتوقيت البحرين. يجمع هذا التقرير تقرير «Talabat October 2026» السابق مع تحليل الطلبات الفردية، وكل الأرقام محدّثة من البوابة في 2 نوفمبر.</span>
+    <span>المبيعات = قيمة الطعام قبل خصومات العروض ورسوم التوصيل. الطلبات = المسلّمة فقط. الصافي من حقل «الإيراد الصافي» لكل طلب. خسارة سار تقديرية: متوسط مبيعات أيام العمل × 14 يوماً بلا طلبات.</span>
+    <span>فرع «القدم» في طلبات هو فرع جبلة حبشي. فرع سترة موجود لفريج بن عاقول فقط. قسم «كل المبيعات» من تقرير نظام نقاط البيع (sales_report_4.csv، 18,273 فاتورة). مبيعات المحل لا تفرّق بين العلامتين في هذا التقرير. بيانات جاهز لفريج بن عاقول من ملف التصدير «طلبات أكتوبر» (6 فروع، المبلغ = قيمة الطلب كما في جاهز، بلا بيانات عمولة). أهلاً غير مشمول.</span>
+  </footer>`}
+
+function drawCharts(B,T){
+  const acc=css("--accent"), mut=css("--muted"), bad=css("--bad"), warn=css("--warn"), good=css("--good");
+  const days=[...Array(31)].map((_,i)=>i+1), hi=brand==="fba"?[6,0]:[5,6];
+  mk("cDaily",{type:"line",data:{labels:days,datasets:[{data:B.dailyRev,borderColor:acc,backgroundColor:acc+"22",fill:true,tension:.3,pointRadius:days.map(d=>hi.includes((d+4)%7)?4:0),pointBackgroundColor:acc,borderWidth:2.2}]},
+    options:baseOpts({interaction:{mode:"index",intersect:false},plugins:TT({title:i=>`${wdOf(+i[0].label)} ${i[0].label} أكتوبر`,label:c=>`${fmt(c.parsed.y)} د.ب · ${B.dailyOrd[c.dataIndex]} طلب`})})});
+  const mx=Math.max(...B.wdRevAvg);
+  mk("cWd",{type:"bar",data:{labels:WD,datasets:[{data:B.wdRevAvg,backgroundColor:B.wdRevAvg.map(v=>v===mx?acc:acc+"66"),borderRadius:6}]},
+    options:baseOpts({plugins:TT({label:c=>`${fmt(c.parsed.y)} د.ب · ${fmt(B.wdAvg[c.dataIndex])} طلب في اليوم`})})});
+  mk("cDp",{type:"bar",data:{labels:DP,datasets:[{data:B.daypart.slice(0,4),backgroundColor:acc,borderRadius:6}]},
+    options:baseOpts({plugins:TT({label:c=>`${fmt(c.parsed.y)} طلب · ${fmt(B.daypartRev[c.dataIndex])} د.ب`})})});
+  const br=B.branches, names=br.map(b=>b.name.split(" / ")[0]);
+  mk("cNew",{type:"bar",data:{labels:names,datasets:[
+    {label:"عائدون",data:br.map(b=>b.retC),backgroundColor:acc,borderRadius:4,stack:"s"},
+    {label:"جدد",data:br.map(b=>b.newC),backgroundColor:css("--accent-2"),borderRadius:4,stack:"s"}]},
+    options:baseOpts({plugins:{...TT({label:c=>`${c.dataset.label}: ${fmt(c.parsed.y)}`}),legend:{display:true,position:"bottom",rtl:true,labels:{color:mut,boxWidth:12,font:{family:"IBM Plex Sans Arabic"}}}},scales:{...baseOpts().scales,x:{...baseOpts().scales.x,stacked:true},y:{...baseOpts().scales.y,stacked:true}}})});
+  const conv=br.map(b=>b.buyers/b.explorers*100), avg=T.buyers/T.explorers*100;
+  mk("cConv",{type:"bar",data:{labels:names,datasets:[{data:conv,backgroundColor:conv.map(v=>v<avg-2?bad+"bb":acc),borderRadius:6},
+    {type:"line",data:names.map(()=>avg),borderColor:mut,borderDash:[5,4],borderWidth:1.4,pointRadius:0}]},
+    options:baseOpts({plugins:{...TT({label:c=>`${fmt(c.parsed.y,1)}% من زوار القائمة طلبوا`}),tooltip:{...TT({label:c=>`${fmt(c.parsed.y,1)}% من زوار القائمة طلبوا`}).tooltip,filter:i=>i.datasetIndex===0}},scales:{...baseOpts().scales,y:{...baseOpts().scales.y,ticks:{...baseOpts().scales.y.ticks,callback:v=>v+"%"}}}})});
+  const awt=br.map(b=>b.awtRate);
+  mk("cAwt",{type:"bar",data:{labels:names,datasets:[{data:awt,backgroundColor:awt.map(v=>v>=60?bad:v>=50?warn:good),borderRadius:6}]},
+    options:baseOpts({indexAxis:"y",plugins:TT({label:c=>`${fmt(c.parsed.x,1)}% من الطلبات`}),scales:{x:{...baseOpts().scales.y,max:100,ticks:{...baseOpts().scales.y.ticks,callback:v=>v+"%"}},y:{...baseOpts().scales.x}}})});
+  const prep=br.map(b=>b.prep/60);
+  mk("cPrep",{type:"bar",data:{labels:names,datasets:[{data:prep,backgroundColor:prep.map(v=>v>=12?bad:v>=10?warn:acc),borderRadius:6}]},
+    options:baseOpts({indexAxis:"y",plugins:TT({label:c=>`${fmt(c.parsed.x,1)} دقيقة`}),scales:{x:{...baseOpts().scales.y},y:{...baseOpts().scales.x}}})});
+  const rt=br.map(b=>b.rating);
+  mk("cRate",{type:"bar",data:{labels:names,datasets:[{data:rt,backgroundColor:rt.map(v=>v<4?bad:v<4.4?warn:good),borderRadius:6}]},
+    options:baseOpts({plugins:TT({label:c=>`${fmt(c.parsed.y,1)} من 5`}),scales:{...baseOpts().scales,y:{...baseOpts().scales.y,beginAtZero:false,min:3,max:5}}})});
+}
+
+function drawHeat(B){
+  const hrs=[...Array(17)].map((_,i)=>i+6), max=Math.max(...B.heat.flat());
+  let h=`<div class="heat"><span></span>${hrs.map(x=>`<span class="h num">${x}</span>`).join("")}`;
+  B.heat.forEach((row,i)=>{h+=`<span class="d">${WD[i]}</span>`+hrs.map(x=>{const v=row[x]; const a=v?Math.round(12+88*v/max):0;
+    return `<span class="c" data-t="${WD[i]} الساعة ${x}:00 · ${v} طلب" style="background:${v?`color-mix(in srgb,var(--accent) ${a}%,var(--sunk))`:"var(--sunk)"}"></span>`}).join("")});
+  document.getElementById("heat").innerHTML=h+"</div>";
 }
 const tip=document.getElementById("tip");
-function bindTips(A){
-  document.querySelectorAll("#map g[data-k]").forEach(g=>{
-    const k=g.dataset.k, b=B[k];
-    const html=()=>`<b>${b.n}</b><br>أكتوبر: ${fmt(b.ord)} طلب · ${fmt(b.rev)} د.ب${b.close?`<br>يُغلق، وطلباته إلى ${B[dest(k)].n} (${fmt(km(k,dest(k)),1)} كم)`:A[k].inc>0?`<br>بعد الإغلاق: ${fmt(A[k].ord)} طلب شهرياً (+${fmt(A[k].inc)})`:""}`;
-    const show=(x,y)=>{tip.innerHTML=html(); tip.style.opacity=1; tip.style.left=Math.min(x+14,innerWidth-tip.offsetWidth-10)+"px"; tip.style.top=(y+14)+"px";};
-    g.addEventListener("pointermove",e=>show(e.clientX,e.clientY));
-    g.addEventListener("pointerleave",()=>tip.style.opacity=0);
-    g.addEventListener("focus",()=>{const r=g.getBoundingClientRect(); show(r.left,r.bottom);});
-    g.addEventListener("blur",()=>tip.style.opacity=0);
-  });
+document.addEventListener("pointermove",e=>{const c=e.target.closest&&e.target.closest(".heat .c"); if(c){tip.textContent=c.dataset.t; tip.style.opacity=1; tip.style.left=Math.min(e.clientX+12,innerWidth-tip.offsetWidth-8)+"px"; tip.style.top=(e.clientY+14)+"px";} else tip.style.opacity=0;});
+
+const COLS=[["name","الفرع"],["rev","المبيعات"],["share","الحصة"],["ord","الطلبات"],["aov","قيمة الطلب"],["conv","تحويل القائمة"],["awtRate","انتظار السائق"],["prep","التحضير"],["contact","الشكاوى"],["rating","التقييم"]];
+function val(b,k,tot){if(k==="share")return b.rev/tot; if(k==="conv")return b.buyers/b.explorers*100; return b[k];}
+function drawTable(){
+  const T=DATA.brands[brand].T;
+  const br=[...DATA.brands[brand].branches].sort((a,b)=>{const x=val(a,sortKey,T.rev),y=val(b,sortKey,T.rev); return (typeof x==="string"?x.localeCompare(y,"ar"):x-y)*sortDir;});
+  const mx=Math.max(...br.map(b=>b.rev)), t=document.getElementById("tbl");
+  t.innerHTML=`<thead><tr>${COLS.map(([k,l])=>`<th scope="col"><button type="button" data-k="${k}" ${k===sortKey?`aria-sort="${sortDir>0?"ascending":"descending"}"`:""}>${l}</button></th>`).join("")}</tr></thead>
+  <tbody>${br.map(b=>{const cv=b.buyers/b.explorers*100;
+    const aw=b.awtRate>=60?"r":b.awtRate>=50?"w":"g", pr=b.prep>=720?"r":b.prep>=600?"w":"g", rt=b.rating<4?"r":b.rating<4.4?"w":"g", ct=b.contact>=0.7?"r":b.contact>=0.4?"w":"g";
+    return `<tr data-id="${b.id}" tabindex="0" class="${b.id===selected?"sel":""}">
+      <td class="name">${b.name}</td>
+      <td><div class="barcell"><span class="num">${fmt(b.rev)}</span><span class="minibar" style="width:${Math.round(b.rev/mx*70)}px"></span></div></td>
+      <td class="num">${fmt(b.rev/T.rev*100,1)}%</td><td class="num">${fmt(b.ord)}</td><td class="num">${fmt(b.aov,2)}</td><td class="num">${fmt(cv,1)}%</td>
+      <td><span class="pill ${aw} num">${fmt(b.awtRate,0)}%</span></td><td><span class="pill ${pr} num">${fmt(b.prep/60,1)} د</span></td><td><span class="pill ${ct} num">${fmt(b.contact,2)}%</span></td><td><span class="pill ${rt} num">${fmt(b.rating,1)}</span></td></tr>`}).join("")}</tbody>`;
+  t.querySelectorAll("th button").forEach(btn=>btn.onclick=()=>{const k=btn.dataset.k; if(k===sortKey) sortDir*=-1; else {sortKey=k; sortDir=k==="name"?1:-1;} drawTable();});
+  t.querySelectorAll("tbody tr").forEach(tr=>{tr.onclick=()=>showDetail(tr.dataset.id,true); tr.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();showDetail(tr.dataset.id,true)}}});
 }
-document.querySelectorAll(".switch button").forEach(b=>b.onclick=()=>{state=b.dataset.s; document.querySelectorAll(".switch button").forEach(x=>x.setAttribute("aria-pressed",x===b)); draw();});
-document.getElementById("saarSeg").onclick=e=>{const b=e.target.closest("button"); if(!b) return; saarTo=b.dataset.v; [...b.parentNode.children].forEach(x=>x.setAttribute("aria-pressed",x===b)); draw();};
-document.getElementById("rec").oninput=e=>{rec=+e.target.value/100; document.getElementById("recO").textContent=e.target.value+"%"; draw();};
-draw();
+
+function branchTips(b,T){
+  const out=[], cv=b.buyers/b.explorers*100, avgCv=T.buyers/T.explorers*100, ns=b.newC/(b.newC+b.retC)*100, avgNs=T.newC/(T.newC+T.retC)*100;
+  if(b.offline>100000) out.push(["warn",`كان مغلقاً على طلبات 14 يوماً (7–20 أكتوبر). عند أي إغلاق: حوّل الطلبات لأقرب فرع أو جدول الإغلاق مسبقاً في البوابة بدل التوقف المفاجئ.`]);
+  else if(b.offline>18000) out.push(["warn",`توقف عن استقبال الطلبات ${N(fmt(b.offline/3600,1))} ساعة خلال الشهر. راجع الأسباب (جهاز، إنترنت، إيقاف يدوي وقت الذروة).`]);
+  if(b.awtRate>=60) out.push(["warn",`انتظار السائق مرتفع جداً (${N(fmt(b.awtRate,0)+"%")}). اضغط «جاهز» فقط عندما يكون الطلب مغلّفاً فعلاً، وابدأ التحضير لحظة القبول.`]);
+  else if(b.awtRate>=50) out.push(["warn",`نصف الطلبات تقريباً فيها انتظار للسائق (${N(fmt(b.awtRate,0)+"%")}). تجهيز مسبق للأصناف الأكثر طلباً قبل الذروة يقلّص هذا.`]);
+  else out.push(["ok",`انتظار السائق أقل من بقية الفروع (${N(fmt(b.awtRate,0)+"%")}). طريقة عمل هذا الفرع تصلح نموذجاً للآخرين.`]);
+  if(b.prep>=720) out.push(["warn",`وقت التحضير ${N(fmt(b.prep/60,1))} دقيقة، أطول من متوسط العلامة (${N(fmt(T.prep/60,1))}). راجع ترتيب المحطة وعدد الموظفين في ساعات الفطور.`]);
+  if(cv<avgCv-2) out.push(["warn",`التحويل من القائمة ${N(fmt(cv,1)+"%")} أقل من المتوسط (${N(fmt(avgCv,1)+"%")}). صور أوضح، الأصناف الأكثر مبيعاً في الأعلى، وتأكد أن كل الأصناف متوفرة.`]);
+  else if(cv>avgCv+2) out.push(["ok",`من يفتح القائمة هنا يطلب أكثر من غيره (${N(fmt(cv,1)+"%")}). الإعلان أو العروض لجلب زوار أكثر ستعطي هنا أعلى عائد.`]);
+  if(b.contact>=0.7) out.push(["warn",`نسبة الشكاوى ${N(fmt(b.contact,2)+"%")} من الطلبات، من الأعلى بين الفروع. اقرأ الشكاوى في البوابة وعالج السبب المتكرر.`]);
+  if(b.rating<4) out.push(["warn",`التقييم ${N(fmt(b.rating,1))} من 5 وهو الأدنى. اقرأ آخر التعليقات، عالج السبب المتكرر، وردّ على المراجعات السلبية.`]);
+  if(b.ded>=3) out.push(["warn",`${N(b.ded)} طلبات خُصم منها بسبب شكوى (${Object.entries(b.dedReasons).map(([k,v])=>`${RN[k]||k} ×${v}`).join("، ")}). قائمة فحص قبل إغلاق الكيس تحل أغلبها.`]);
+  if(ns>avgNs+8) out.push(["ok",`${N(fmt(ns,0)+"%")} من طلباته من زبائن جدد، أعلى من متوسط العلامة (${N(fmt(avgNs,0)+"%")}). اعرف ما الذي يجذبهم هنا وكرّره في الفروع الأخرى.`]);
+  if(b.items<1.4) out.push(["warn",`${N(fmt(b.items,2))} صنف لكل طلب. أضف خيار «اجعلها وجبة» ومشروباً مقترحاً عند كل ساندويتش.`]);
+  return out;
+}
+function showDetail(id,scroll){
+  selected=id; const B=DATA.brands[brand], T=B.T, b=B.branches.find(x=>x.id===id);
+  document.querySelectorAll("#tbl tbody tr").forEach(tr=>tr.classList.toggle("sel",tr.dataset.id===id));
+  const tips=branchTips(b,T), d=document.getElementById("detail");
+  d.innerHTML=`<div class="detail fade">
+    <div class="top"><span class="bn">${META[brand].name} · ${b.name}</span><span class="note">${N(fmt(b.rev/T.rev*100,1)+"%")} من مبيعات ${META[brand].name}</span></div>
+    <div class="facts">
+      <div class="fact"><span class="l">المبيعات</span><span class="v num">${fmt(b.rev)}</span></div>
+      <div class="fact"><span class="l">الصافي</span><span class="v num">${fmt(b.net)}</span></div>
+      <div class="fact"><span class="l">الطلبات</span><span class="v num">${fmt(b.ord)}</span></div>
+      <div class="fact"><span class="l">قيمة الطلب</span><span class="v num">${fmt(b.aov,2)}</span></div>
+      <div class="fact"><span class="l">زوار المطعم</span><span class="v num">${fmt(b.visitors)}</span></div>
+      <div class="fact"><span class="l">ساعات التوقف</span><span class="v num">${fmt(b.offline/3600,1)}</span></div>
+    </div>
+    <div class="grid2b">
+      <div><h3>المبيعات اليومية</h3><div class="chartbox sm"><canvas id="dDaily"></canvas></div></div>
+      <div><h3>الطلبات حسب الساعة</h3><div class="chartbox sm"><canvas id="dHour"></canvas></div></div>
+    </div>
+    <div><h3 style="margin-bottom:8px">ملاحظات ونصائح لهذا الفرع</h3>
+      <ul class="tips">${tips.map(([k,t])=>`<li><span style="color:var(${k==="ok"?"--good":"--warn"})">${ICON[k]}</span><span>${t}</span></li>`).join("")}</ul></div>
+  </div>`;
+  ["dDaily","dHour"].forEach(cid=>{const i=charts.findIndex(c=>c.canvas&&c.canvas.id===cid); if(i>-1){charts[i].destroy();charts.splice(i,1);}});
+  const acc=css("--accent");
+  mk("dDaily",{type:"bar",data:{labels:[...Array(31)].map((_,i)=>i+1),datasets:[{data:b.daily,backgroundColor:b.daily.map(v=>v?acc:css("--bad")),borderRadius:3,minBarLength:2}]},
+    options:baseOpts({plugins:TT({title:i=>`${wdOf(+i[0].label)} ${i[0].label} أكتوبر`,label:c=>c.parsed.y?`${fmt(c.parsed.y,1)} د.ب`:"لا طلبات"})})});
+  const hrs=[...Array(17)].map((_,i)=>i+6);
+  mk("dHour",{type:"bar",data:{labels:hrs,datasets:[{data:hrs.map(h=>b.hours[h]),backgroundColor:acc,borderRadius:3}]},
+    options:baseOpts({plugins:TT({title:i=>`الساعة ${i[0].label}:00`,label:c=>`${c.parsed.y} طلب`})})});
+  if(scroll) d.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"nearest"});
+}
+
+function drawFunnel(T){
+  const st=[["شاهدوا المطعم",T.visitors],["فتحوا القائمة",T.explorers],["وصلوا للسلة",T.carts],["طلبوا",T.buyers]];
+  const why=["يفتحون القائمة. هنا أكبر فاقد: الصورة الرئيسية والعروض وترتيبك في القائمة تحدد هذه النسبة.","يضيفون شيئاً للسلة. القائمة نفسها (الصور، الأسعار، الوصف) تحدد هذه النسبة.","يكملون الطلب. نسبة جيدة، والفاقد هنا غالباً بسبب رسوم أو وقت التوصيل."];
+  let h=""; st.forEach(([l,v],i)=>{
+    const w=i===0?100:Math.max(1.5,Math.sqrt(v/T.visitors)*100);
+    h+=`<div class="fstep"><span class="lab">${l}</span><div class="ftrack"><div class="ffill" style="width:${w}%"></div></div><span class="val num">${fmt(v)}</span></div>`;
+    if(i<3) h+=`<div class="fdrop">↓ ${N(fmt(st[i+1][1]/v*100,1)+"%")} ${why[i]}</div>`;
+  });
+  document.getElementById("funnel").innerHTML=h+`<p class="note">الأشرطة على مقياس الجذر التربيعي حتى تظهر المراحل الصغيرة. التحويل الكلي ${N(fmt(T.buyers/T.visitors*100,2)+"%")}.</p>`;
+}
+function drawReasons(br){
+  const agg={}; br.forEach(b=>Object.entries(b.dedReasons).forEach(([k,v])=>{const n=RN[k]||k; agg[n]=(agg[n]||0)+v;}));
+  const e=Object.entries(agg).sort((a,b)=>b[1]-a[1]), mx=e.length?e[0][1]:1;
+  document.getElementById("reasons").innerHTML=e.length?e.map(([k,v])=>`<div style="display:grid;grid-template-columns:150px 1fr 30px;gap:10px;align-items:center;font-size:.9rem"><span>${k}</span><span style="height:8px;border-radius:4px;background:var(--warn);width:${v/mx*100}%"></span><span class="num" style="text-align:end;font-weight:700">${v}</span></div>`).join(""):'<p class="note">لا خصومات تُذكر.</p>';
+}
+
+function drawActions(B,T){
+  const aov=T.rev/T.ord, M=META[brand];
+  const midRev=[1,2,3,4].reduce((s,i)=>s+B.wdRevAvg[i]*4,0), fri=B.wdAvg[6], sat=B.wdAvg[0], mid=(B.wdAvg[1]+B.wdAvg[2]+B.wdAvg[3]+B.wdAvg[4])/4;
+  const A = brand==="fba" ? [
+    ["h","لا تسمح بإغلاق فرع دون خطة","إغلاق سار 14 يوماً كلّف قرابة "+fmt(M.lost)+" د.ب. عند أي صيانة أو نقص موظفين: أغلق جزئياً (ساعات الذروة فقط)، أو جدول الإغلاق في البوابة مسبقاً، وراقب يومياً أي فرع يسجّل صفر طلبات.",M.lost,"مبيعات محمية"],
+    ["h","أوقف جاهز عند إغلاق أي فرع","أثناء إغلاق سار ظل الفرع ظاهراً ومفتوحاً في جاهز، فوصلته 38 طلباً بقيمة 172 د.ب انتهى وقتها دون أن يقبلها أحد. هذا يزعج الزبون ويضر تقييم الفرع في جاهز. اجعل إيقاف الفرع في طلبات وجاهز وأهلاً معاً جزءاً ثابتاً من أي إغلاق.",172,"طلبات ضائعة في جاهز"],
+    ["h","اقضِ على انتظار السائق","52% من الطلبات فيها انتظار. أكثر فرع: القدم/جبلة حبشي (67%) وعالي (59%)، وأفضلها المالكية وسترة (نحو 35%). ابدأ التحضير لحظة القبول، جهّز أساسيات الفطور قبل 6:30، ولا تضغط «جاهز» إلا والكيس مغلق. طلبات تفرض رسوماً عندما يتجاوز الانتظار 10 دقائق، وتخفض ترتيب المطعم مع الوقت.",null,"ترتيب أعلى في البحث"],
+    ["h","جهّز الجمعة والسبت كأنهما يوما عيد","الجمعة "+fmt(fri)+" طلباً في اليوم والسبت "+fmt(sat)+"، مقابل نحو "+fmt(mid)+" في أيام الوسط. الذروة بين 7 و10 صباحاً. زد الموظفين والكميات المجهزة في هذه النوافذ تحديداً، فأي تأخير فيها يضرب الانتظار والتقييم معاً.",null,"تجربة أفضل في الذروة"],
+    ["m","ارفع قيمة الطلب بفطور العائلة","المتوسط "+fmt(aov,2)+" د.ب و"+fmt(T.items/T.ord,1)+" صنف. صمّم «صينية فطور» للجمعة والسبت بسعر ثابت، واقترح الكرك أو العصير كإضافة. زيادة 300 فلس فقط على متوسط الطلب تعني نحو "+fmt(T.ord*0.3)+" د.ب شهرياً.",T.ord*0.3,"عند +0.300 د.ب"],
+    ["m","املأ أيام الوسط وفترة الظهيرة","الأحد إلى الأربعاء نصف الجمعة تقريباً، والطلب يهبط بشدة بين 12 و4 عصراً. عرض محدود الوقت في هذه الساعات يستغل طاقة مطبخ موجودة أصلاً. زيادة 10% في مبيعات هذه الأيام الأربعة تساوي نحو "+fmt(midRev*0.10)+" د.ب.",midRev*0.10,"عند +10% وسط الأسبوع"],
+    ["m","حسّن صفحات زنج وسترة","من يفتح القائمة في زنج (18.5%) وسترة (17.4%) يطلب أقل من بقية الفروع (المتوسط 22.4%). وسترة أصغر الفروع ظهوراً (نحو 4,900 زائر فقط)، فالمشكلة فيها الظهور قبل الطلب. راجع الصور والأسعار والأصناف غير المتوفرة. رفع زنج وحده للمتوسط يضيف نحو 90 طلباً شهرياً.",93*4.0,"لزنج فقط"],
+    ["m","قائمة فحص قبل إغلاق الكيس","27 خصماً بسبب شكاوى، أغلبها صنف ناقص أو خاطئ. القدم/جبلة حبشي وحده 8 خصومات بـ 17.6 د.ب، ونسبة الشكاوى فيه 1.35% وهي الأعلى بين كل الفروع. ملصق بالأصناف على كل كيس ومراجعة من شخص ثانٍ في الذروة يحلّها.",T.dedAmt,"خصومات أقل"],
+    ["l","راجع عمولة مدينة حمد وطلبات الاختبار","عمولة مدينة حمد 24.8% مقابل 20.7% لبقية الفروع (≈55 د.ب في الشهر). وفي 31 أكتوبر ظهرت عدة طلبات ملغاة بقيمة 30 فلساً من الفرع نفسه، تبدو تجريبية. تأكد منها مع مدير حسابك في طلبات.",55,"فرق العمولة"],
+  ] : [
+    ["h","حوّل كل ساندويتش إلى وجبة","الزبون يطلب "+fmt(T.items/T.ord,2)+" صنف فقط، و63% من الطلبات بين 3 و4 د.ب أي ساندويتش واحد. أضف «اجعلها وجبة» (بطاطس + مشروب) بفرق سعر مغرٍ، ومشروباً مقترحاً تحت كل صنف. لو أضاف 25% من الزبائن ديناراً واحداً: نحو "+fmt(T.ord*0.25)+" د.ب شهرياً.",T.ord*0.25,"عند 25% × 1 د.ب"],
+    ["h","لا تسمح بإغلاق فرع دون خطة","سار أُغلق 14 يوماً وخسر قرابة "+fmt(M.lost)+" د.ب، في الفترة نفسها التي أُغلق فيها فريج بن عاقول سار. اجعل أي إغلاق للموقع مجدولاً ومعلناً في البوابة، وراجع سببه.",M.lost,"مبيعات محمية"],
+    ["h","قصّر وقت التحضير في عالي والمالكية ومدينة حمد","عالي 15 دقيقة، المالكية 14، مدينة حمد 12، بينما زنج يحضّر في 8.5 دقائق بنفس القائمة. انقل طريقة عمل زنج (ترتيب المحطة، تجهيز الخبز والصوصات مسبقاً) إلى هذه الفروع.",null,"توصيل أسرع"],
+    ["h","عالج التقييم في مدينة حمد وسار","تقييم 3.5 فقط في الفرعين، مقابل 4.6–4.8 في المحرق وسند. اقرأ آخر التعليقات، ابحث عن السبب المتكرر (برودة، تأخير، كمية)، وردّ على كل مراجعة سلبية. التقييم المنخفض يقلل من يفتح القائمة أصلاً.",null,"ثقة الزبون"],
+    ["m","حسّن صفحة القائمة في زنج وسند","من يفتح القائمة في زنج (16.1%) وسند (17.3%) يطلب أقل من بقية الفروع رغم أنهما من الأعلى زيارة. راجع الصور والترتيب والأصناف غير المتوفرة.",null,"تحويل أعلى"],
+    ["m","استثمر في الخميس","الخميس أقوى أيام JUST BUNS بـ "+fmt(B.wdRevAvg[5])+" د.ب في اليوم، أعلى من الجمعة. عرض «خميس البنز» أو تصدّر الإعلانات مساء الأربعاء وصباح الخميس يضاعف أثر يوم قوي أصلاً.",B.wdRevAvg[5]*5*0.15,"عند +15% للخميس"],
+    ["m","افتح باب المساء","72% من طلبات JUST BUNS في الفطور، والمساء بعد 7 أقل من 6%. هذا وقت البرجر عند أغلب الناس. جرّب أصنافاً مسائية أو عرضاً من 7 إلى 10 لشهر واحد في فرعين وقس النتيجة.",null,"سوق غير مستغل"],
+    ["l","كرّر وصفة القدم/جبلة حبشي","40% من طلباته زبائن جدد، أعلى نسبة في العلامة. اعرف ما الذي يجذبهم (عرض؟ موقع؟ صور؟) وطبّقه في عالي ومدينة حمد حيث الزيارات قليلة.",null,"زبائن جدد"],
+  ];
+  const PR={h:"أولوية عالية",m:"متوسطة",l:"متابعة"};
+  document.getElementById("actions").innerHTML=A.map(([p,t,dsc,imp,lab],i)=>`<div class="act"><span class="n num">${i+1}</span><div><h3>${t}<span class="pri ${p}">${PR[p]}</span></h3><p>${dsc}</p></div><div class="imp">${imp?`<b class="num">+${fmt(imp)} د.ب</b>`:`<b style="font-size:.95rem">—</b>`}<span>${lab}</span></div></div>`).join("");
+}
+function bindSim(B,T){
+  const c=document.getElementById("sConv"), a=document.getElementById("sAov"), d=document.getElementById("sDays");
+  const aov=T.rev/T.ord, net=T.net/T.rev, lostPerDay=META[brand].lost/14;
+  const up=()=>{const cv=+c.value/100, av=+a.value, dd=+d.value;
+    document.getElementById("oConv").textContent=c.value+"%"; document.getElementById("oAov").textContent=fmt(av,3)+" د.ب"; document.getElementById("oDays").textContent=dd;
+    const newRev=T.ord*(1+cv)*(aov+av)+lostPerDay*dd, add=newRev-T.rev;
+    document.getElementById("simBig").innerHTML=`${N("+"+fmt(add))} د.ب`;
+    document.getElementById("simTot").innerHTML=`${N(fmt(newRev))} د.ب`;
+    document.getElementById("simNet").innerHTML=`${N("+"+fmt(add*net))} د.ب`;};
+  [c,a,d].forEach(x=>x.oninput=up); up();
+}
+
+/* ---------- Jahez (FBA only) ---------- */
+function jahezSection(){
+  const J=DATA.jahez, tal=Object.fromEntries(DATA.brands.fba.branches.map(b=>[b.name,b]));
+  const tRev=J.branches.reduce((s,b)=>s+tal[b.name].rev,0), share=J.rev/(J.rev+tRev)*100;
+  const rows=[...J.branches].sort((a,b)=>b.rev-a.rev);
+  return `<section>
+    <div class="head"><h2>جاهز: فريج بن عاقول في 6 فروع</h2><p class="lede">طلبات أكتوبر من جاهز لفروع زنج وسار والقدم/جبلة حبشي وعالي والمالكية ومدينة حمد، مقارنة بطلبات لنفس الفروع. سند والمحرق وسترة لا تبيع فريج بن عاقول على جاهز، وهذا ما يؤكده تقرير نقاط البيع أيضاً.</p></div>
+    <div class="kpis">
+      <div class="kpi"><span class="l">مبيعات جاهز</span><span class="v">${bhd(J.rev)}</span><span class="s">${N(fmt(J.rev/31))} د.ب في اليوم</span></div>
+      <div class="kpi"><span class="l">الطلبات المسلّمة</span><span class="v">${N(fmt(J.ord))}</span><span class="s">من ${N(J.received)} طلباً وصلت</span></div>
+      <div class="kpi"><span class="l">متوسط قيمة الطلب</span><span class="v">${bhd(J.rev/J.ord,2)}</span><span class="s">في طلبات لنفس الفروع ${N(fmt(tRev/J.branches.reduce((s,b)=>s+tal[b.name].ord,0),2))}</span></div>
+      <div class="kpi"><span class="l">حصة جاهز من التوصيل</span><span class="v">${N(fmt(share,1)+"%")}</span><span class="s">طلبات ${N(fmt(100-share,1)+"%")} لنفس الفروع</span></div>
+    </div>
+    <div class="alert">
+      <span style="color:var(--bad)">${ICON.warn.replace('width="16" height="16"','width="28" height="28"')}</span>
+      <div><h3>${N(J.to)} طلباً انتهى وقتها دون قبول، بقيمة ${N(fmt(J.toAmt))} د.ب</h3>
+      <p>${N(J.branches.find(b=>b.name==="سار").to)} منها في <b>سار</b> بين 6 و19 أكتوبر، أي أثناء إغلاق الفرع. أُوقف الفرع في طلبات لكنه بقي مفتوحاً في جاهز، فاستمر الزبائن في الطلب ولم يرد أحد. والباقي (${N(J.branches.find(b=>b.name==="زنج").to)}) في زنج. معدل الطلبات الضائعة ${N(fmt(J.to/J.received*100,1)+"%")} من كل ما وصل في جاهز.</p></div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h3>المبيعات اليومية في جاهز</h3><p class="note">الأعمدة الحمراء أيام وصلت فيها طلبات لم يقبلها أحد.</p><div class="chartbox sm"><canvas id="jDaily"></canvas></div></div>
+      <div class="panel"><h3>طلبات جاهز حسب الساعة</h3><p class="note">نفس نمط طلبات: ذروة الفطور 7–10 صباحاً، وموجة ثانية أصغر بعد 7 مساءً.</p><div class="chartbox sm"><canvas id="jHour"></canvas></div></div>
+    </div>
+    <div class="tablewrap"><table style="min-width:640px">
+      <thead><tr><th>الفرع</th><th>مبيعات جاهز</th><th>طلبات جاهز</th><th>قيمة الطلب</th><th>مبيعات طلبات</th><th>حصة جاهز</th><th>طلبات ضائعة</th></tr></thead>
+      <tbody>${rows.map(b=>{const t=tal[b.name], sh=b.rev/(b.rev+t.rev)*100;
+        return `<tr style="cursor:default"><td class="name">${b.name}</td><td class="num">${fmt(b.rev)}</td><td class="num">${b.ord}</td><td class="num">${fmt(b.rev/b.ord,2)}</td><td class="num">${fmt(t.rev)}</td>
+        <td><div class="barcell"><span class="num">${fmt(sh,1)}%</span><span class="minibar" style="width:${Math.round(sh*3)}px;background:var(--accent-2)"></span></div></td>
+        <td>${b.to?`<span class="pill r num">${b.to} · ${fmt(b.toAmt)} د.ب</span>`:`<span class="pill g">لا يوجد</span>`}</td></tr>`}).join("")}</tbody></table></div>
+    <div class="panel"><h3 style="margin-bottom:8px">قراءة سريعة</h3><ul class="tips">
+      <li><span style="color:var(--good)">${ICON.ok}</span><span>زنج أقوى فروع جاهز بفارق كبير (${N(fmt(rows[0].rev))} د.ب)، وجاهز يمثل فيه ${N("20%")} من مبيعات التوصيل. وعالي قريب منه (${N("17%")}). في هذين الفرعين جاهز قناة حقيقية تستحق نفس اهتمام طلبات.</span></li>
+      <li><span style="color:var(--warn)">${ICON.warn}</span><span>القدم/جبلة حبشي ثاني أقوى فروع طلبات، لكن جاهز فيه ${N("9%")} فقط، والمالكية ${N("8%")}. الطلب موجود في المنطقة. صور القائمة والعروض في جاهز لهذين الفرعين أول ما يُراجع.</span></li>
+      <li><span style="color:var(--warn)">${ICON.warn}</span><span>متوسط الطلب في جاهز ${N(fmt(J.rev/J.ord,2))} د.ب، قريب من طلبات. والمالكية الأدنى (${N("3.60")} د.ب)، فاقتراح المشروب أو الإضافة عند الطلب يفيد هناك أولاً.</span></li>
+      <li><span style="color:var(--warn)">${ICON.warn}</span><span>الجمعة والسبت أعلى أيام جاهز أيضاً (نحو ${N("50%")} من مبيعاته)، فجاهزية المطبخ في ذروة نهاية الأسبوع تخدم المنصتين معاً.</span></li>
+    </ul></div>
+  </section>`;
+}
+function drawJahez(){
+  const J=DATA.jahez, acc=css("--accent-2"), bad=css("--bad");
+  mk("jDaily",{type:"bar",data:{labels:[...Array(31)].map((_,i)=>i+1),datasets:[{data:J.dailyRev,backgroundColor:J.dailyTo.map(v=>v?bad:acc),borderRadius:3,minBarLength:2}]},
+    options:baseOpts({plugins:TT({title:i=>`${wdOf(+i[0].label)} ${i[0].label} أكتوبر`,label:c=>`${fmt(c.parsed.y,1)} د.ب`+(J.dailyTo[c.dataIndex]?` · ${J.dailyTo[c.dataIndex]} طلب ضائع`:"")})})});
+  const hrs=[...Array(17)].map((_,i)=>i+6);
+  mk("jHour",{type:"bar",data:{labels:hrs,datasets:[{data:hrs.map(h=>J.hours[h]),backgroundColor:acc,borderRadius:3}]},
+    options:baseOpts({plugins:TT({title:i=>`الساعة ${i[0].label}:00`,label:c=>`${c.parsed.y} طلب`})})});
+}
+
+/* ---------- POS all channels ---------- */
+const CH=[["store","المحل","--store"],["tf","طلبات · فريج","--fba"],["tj","طلبات · بنز","--jb"],["jf","جاهز · فريج","--jahez"],["jj","جاهز · بنز","--jahez"],["af","أهلاً · فريج","--ahlan"],["aj","أهلاً · بنز","--ahlan"]];
+function posSection(){
+  const P=DATA.pos, T=P.total, st=P.ch.store[1], tal=P.ch.tf[1]+P.ch.tj[1], jah=P.ch.jf[1]+P.ch.jj[1], ahl=P.ch.af[1]+P.ch.aj[1];
+  const com=DATA.brands.fba.T.com+DATA.brands.jb.T.com;
+  const bs=[...P.branches].sort((a,b)=>b.total-a.total);
+  const pay=P.pay, cm=pay["Pay by Card Machine"], ca=pay["Cash"], bp=pay["BenefitPay App"], cb=pay["Cash by benefit"];
+  const recon=[["طلبات · فريج بن عاقول",P.ch.tf,[DATA.brands.fba.T.ord,DATA.brands.fba.T.rev]],["طلبات · JUST BUNS",P.ch.tj,[DATA.brands.jb.T.ord,DATA.brands.jb.T.rev]],["جاهز · فريج بن عاقول",P.ch.jf,[DATA.jahez.ord,DATA.jahez.rev]]];
+  return `<section>
+    <div class="head"><h2>كل المبيعات: المحل والتوصيل</h2><p class="lede">من تقرير نظام نقاط البيع لكل الفروع التسعة. يجمع البيع في المحل (بطاقة، نقد، BenefitPay) مع طلبات المنصات الثلاث.</p></div>
+    <div class="panel" style="display:grid;gap:14px">
+      <h3>من أين يأتي كل دينار</h3>
+      <div class="split" style="height:42px">${[["المحل",st,"--store"],["طلبات",tal,"--fba"],["جاهز",jah,"--jahez"],["أهلاً",ahl,"--ahlan"]].map(([l,v,c])=>`<span style="flex:${v};background:var(${c})" title="${l} ${fmt(v)} د.ب">${v/T>0.06?l+" "+N(fmt(v/T*100,0)+"%"):""}</span>`).join("")}</div>
+      <div class="mlist" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+        <div><span class="l">المحل</span><span class="v">${bhd(st)}</span><span class="note">${N(fmt(P.ch.store[0]))} فاتورة · متوسط ${N(fmt(st/P.ch.store[0],2))}</span></div>
+        <div><span class="l">طلبات</span><span class="v">${bhd(tal)}</span><span class="note">فريج ${N(fmt(P.ch.tf[1]))} · بنز ${N(fmt(P.ch.tj[1]))}</span></div>
+        <div><span class="l">جاهز</span><span class="v">${bhd(jah)}</span><span class="note">فريج ${N(fmt(P.ch.jf[1]))} · بنز ${N(fmt(P.ch.jj[1]))}</span></div>
+        <div><span class="l">أهلاً</span><span class="v">${bhd(ahl)}</span><span class="note">فريج ${N(fmt(P.ch.af[1]))} · بنز ${N(fmt(P.ch.aj[1]))}</span></div>
+      </div>
+    </div>
+    <div class="findings">
+      <div class="finding"><span class="tg w">اعتماد</span><span>طلبات وحدها ${N(fmt(tal/T*100,0)+"%")} من كل مبيعات الشركة، وأخذت عمولة نحو ${N(fmt(com))} د.ب هذا الشهر. جاهز وأهلاً معاً أقل من ${N(fmt((jah+ahl)/T*100+0.5,0)+"%")}. أي تعطل أو تغيير في شروط طلبات يضرب نصف المبيعات.</span></div>
+      <div class="finding"><span class="tg g">فرصة</span><span>نقل ${N("10%")} فقط من طلبات طلبات إلى تطبيق الطلبات الخاص بكم يوفّر نحو ${N(fmt(com*0.1))} د.ب عمولة في الشهر. والزبائن العائدون (${N("78%")}) هم الأسهل نقلاً: بطاقة في كل كيس توصيل مع خصم أول طلب من التطبيق.</span></div>
+      <div class="finding"><span class="tg r">سار</span><span>الفرع أُغلق بالكامل من 7 إلى 20 أكتوبر، بلا أي بيع في المحل أو المنصات. بمتوسط ${N(fmt(P.saarDay))} د.ب في اليوم، الخسارة الكاملة نحو <b>${N(fmt(P.saarDay*14))}</b> د.ب.</span></div>
+      <div class="finding"><span class="tg w">سترة والمحرق</span><span>سترة يبيع ${N("86%")} في المحل وطلبات فيه صغير جداً، فالتوصيل فرصة غير مستغلة هناك. والعكس في المحرق: ${N("89%")} توصيل والمحل ضعيف.</span></div>
+      <div class="finding"><span class="tg g">المحل</span><span>متوسط فاتورة المحل ${N(fmt(st/P.ch.store[0],2))} د.ب فقط، والجلوس ${N(fmt(P.dine[1]/P.dine[0],2))} د.ب. الذروة 7–10 صباحاً ثم 6–9 مساءً. البطاقة ${N(fmt(cm[1]/st*100,0)+"%")} من مبيعات المحل والنقد ${N(fmt(ca[1]/st*100,0)+"%")}.</span></div>
+      <div class="finding"><span class="tg g">تطابق</span><span>أرقام نظام نقاط البيع تطابق بوابات المنصات بفارق أقل من ${N("0.4%")} (الجدول أدناه)، فالأرقام في هذا التقرير موثوقة.</span></div>
+    </div>
+    <div class="panel"><h3>مبيعات كل فرع حسب القناة</h3><div class="lgd" style="margin-block:8px">${[["المحل","--store"],["طلبات · فريج","--fba"],["طلبات · بنز","--jb"],["جاهز","--jahez"],["أهلاً","--ahlan"]].map(([l,c])=>`<span><i style="background:var(${c})"></i>${l}</span>`).join("")}</div><div class="chartbox" style="height:380px"><canvas id="pBr"></canvas></div></div>
+    <div class="grid2b">
+      <div class="panel"><h3>المحل والتوصيل يوماً بيوم</h3><div class="chartbox sm"><canvas id="pDaily"></canvas></div></div>
+      <div class="panel"><h3>المحل والتوصيل حسب الساعة</h3><p class="note">المحل يقود الصباح الباكر، والتوصيل يتفوق عليه من 10 صباحاً وفي المساء.</p><div class="chartbox sm"><canvas id="pHour"></canvas></div></div>
+    </div>
+    <div class="tablewrap"><table style="min-width:620px">
+      <thead><tr><th>الفرع</th><th>كل المبيعات</th><th>المحل</th><th>نسبة المحل</th><th>متوسط فاتورة المحل</th><th>التوصيل</th></tr></thead>
+      <tbody>${bs.map(b=>{const sp=b.store/b.total*100;return `<tr style="cursor:default"><td class="name">${b.name}</td><td class="num">${fmt(b.total)}</td><td class="num">${fmt(b.store)}</td><td><div class="barcell"><span class="num">${fmt(sp,0)}%</span><span class="minibar" style="width:${Math.round(sp*0.7)}px;background:var(--store)"></span></div></td><td class="num">${fmt(b.store/b.storeN,2)}</td><td class="num">${fmt(b.total-b.store)}</td></tr>`}).join("")}</tbody></table></div>
+    <div class="tablewrap"><table style="min-width:620px">
+      <thead><tr><th>مطابقة القنوات</th><th>نقاط البيع</th><th>البوابة</th><th>الفرق</th></tr></thead>
+      <tbody>${recon.map(([l,p,q])=>`<tr style="cursor:default"><td class="name">${l}</td><td class="num">${fmt(p[1],1)} · ${fmt(p[0])} طلب</td><td class="num">${fmt(q[1],1)} · ${fmt(q[0])} طلب</td><td class="num">${fmt((p[1]/q[1]-1)*100,2)}%</td></tr>`).join("")}</tbody></table></div>
+  </section>`;
+}
+function drawPos(){
+  const P=DATA.pos, bs=[...P.branches].sort((a,b)=>b.total-a.total);
+  const sets=[["store","المحل","--store"],["tf","طلبات · فريج","--fba"],["tj","طلبات · بنز","--jb"],["j","جاهز","--jahez"],["a","أهلاً","--ahlan"]];
+  const v=(b,k)=>k==="j"?b.jf+b.jj:k==="a"?b.af+b.aj:b[k];
+  mk("pBr",{type:"bar",data:{labels:bs.map(b=>b.name.split(" / ")[0]),datasets:sets.map(([k,l,c])=>({label:l,data:bs.map(b=>v(b,k)),backgroundColor:css(c),stack:"s",borderRadius:2}))},
+    options:baseOpts({indexAxis:"y",interaction:{mode:"index",intersect:false},plugins:{...TT({}),tooltip:{...TT({}).tooltip,displayColors:true,callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.x)} د.ب`}}},scales:{x:{...baseOpts().scales.y,stacked:true},y:{...baseOpts().scales.x,stacked:true}}})});
+  const days=[...Array(31)].map((_,i)=>i+1);
+  mk("pDaily",{type:"bar",data:{labels:days,datasets:[{label:"المحل",data:P.daily.store,backgroundColor:css("--store"),stack:"s"},{label:"التوصيل",data:P.daily.del,backgroundColor:css("--fba"),stack:"s"}]},
+    options:baseOpts({interaction:{mode:"index",intersect:false},plugins:{...TT({}),tooltip:{...TT({}).tooltip,displayColors:true,callbacks:{title:i=>`${wdOf(+i[0].label)} ${i[0].label} أكتوبر`,label:c=>`${c.dataset.label}: ${fmt(c.parsed.y)} د.ب`}}},scales:{x:{...baseOpts().scales.x,stacked:true},y:{...baseOpts().scales.y,stacked:true}}})});
+  const hrs=[...Array(17)].map((_,i)=>i+6);
+  mk("pHour",{type:"line",data:{labels:hrs,datasets:[{label:"المحل",data:hrs.map(h=>P.hours.store[h]),borderColor:css("--store"),tension:.3,pointRadius:0,borderWidth:2.2},{label:"التوصيل",data:hrs.map(h=>P.hours.del[h]),borderColor:css("--fba"),tension:.3,pointRadius:0,borderWidth:2.2}]},
+    options:baseOpts({interaction:{mode:"index",intersect:false},plugins:{...TT({}),legend:{display:true,position:"bottom",rtl:true,labels:{color:css("--muted"),boxWidth:12,font:{family:"IBM Plex Sans Arabic"}}},tooltip:{...TT({}).tooltip,displayColors:true,callbacks:{title:i=>`الساعة ${i[0].label}:00`,label:c=>`${c.dataset.label}: ${fmt(c.parsed.y)} د.ب`}}}})});
+}
+
+/* ---------- combined view ---------- */
+function renderAll(){
+  const F=DATA.brands.fba.T, J=DATA.brands.jb.T, PS=DATA.pos;
+  const rev=F.rev+J.rev, ord=F.ord+J.ord, net=F.net+J.net, cash=F.cash+J.cash;
+  const ret=(F.retC+J.retC)/(F.newC+F.retC+J.newC+J.retC)*100;
+  const bfast=(DATA.brands.fba.daypart[0]+DATA.brands.jb.daypart[0])/ord*100;
+  const locs={}; ALL.forEach(b=>{const k=b.name; locs[k]=locs[k]||{n:k,f:0,j:0}; locs[k][b.brand==="fba"?"f":"j"]+=b.rev;});
+  const L=Object.values(locs).sort((a,b)=>(b.f+b.j)-(a.f+a.j)), lmax=L[0].f+L[0].j;
+  const fc=css("--fba"), jc=css("--jb");
+  document.getElementById("app").innerHTML=`
+  <div class="hero fade">
+    <div>
+      <h1 class="brandname" style="color:var(--ink)">الصورة الكاملة</h1>
+      <p class="period">كل مبيعات الفروع التسعة في أكتوبر 2026: المحل وطلبات وجاهز وأهلاً، ثم مقارنة العلامتين على طلبات. كل علامة لها تقريرها المستقل في الأعلى.</p>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><span class="l">كل المبيعات</span><span class="v">${bhd(PS.total)}</span><span class="s">${N(fmt(PS.total/31))} د.ب في اليوم</span></div>
+      <div class="kpi"><span class="l">عدد الفواتير</span><span class="v">${N(fmt(PS.n))}</span><span class="s">${N(fmt(PS.n/31))} في اليوم</span></div>
+      <div class="kpi"><span class="l">مبيعات المحل</span><span class="v">${bhd(PS.ch.store[1])}</span><span class="s">${N(fmt(PS.ch.store[1]/PS.total*100,0)+"%")} من الإجمالي</span></div>
+      <div class="kpi"><span class="l">مبيعات التوصيل</span><span class="v">${bhd(PS.total-PS.ch.store[1])}</span><span class="s">${N(fmt(100-PS.ch.store[1]/PS.total*100,0)+"%")} من الإجمالي</span></div>
+    </div>
+  </div>
+
+  ${posSection()}
+
+  <section>
+    <div class="head"><h2>ماذا يقول أكتوبر في طلبات</h2></div>
+    <div class="findings">
+      <div class="finding"><span class="tg g">الحجم</span><span>${N(fmt(rev))} د.ب من ${N(fmt(ord))} طلباً. فريج بن عاقول ${N(fmt(F.rev/rev*100,0)+"%")} من المبيعات وJUST BUNS ${N(fmt(J.rev/rev*100,0)+"%")}.</span></div>
+      <div class="finding"><span class="tg g">أقوى موقع</span><span>${L[0].n} هو أكبر موقع بـ ${N(fmt(L[0].f+L[0].j))} د.ب من العلامتين، يليه ${L[1].n} بـ ${N(fmt(L[1].f+L[1].j))} د.ب.</span></div>
+      <div class="finding"><span class="tg r">إغلاق</span><span><b>فرعا سار أُغلقا معاً 14 يوماً</b> (7–20 أكتوبر) بلا أي طلب. الخسارة التقديرية نحو ${N(fmt(META.fba.lost+META.jb.lost))} د.ب للعلامتين.</span></div>
+      <div class="finding"><span class="tg w">انتظار السائق</span><span>السائق ينتظر طعاماً غير جاهز في نحو <b>نصف الطلبات</b>. الأفضل فريج المالكية وسترة (نحو 35%)، والأسوأ فريج القدم/جبلة حبشي (67%).</span></div>
+      <div class="finding"><span class="tg w">الشكاوى</span><span>نسبة الشكاوى في <b>فريج القدم/جبلة حبشي 1.35%</b> من الطلبات، الأعلى بين كل الفروع، ثم فريج سار وفريج عالي (0.72% لكل منهما).</span></div>
+      <div class="finding"><span class="tg g">الولاء</span><span>${N(fmt(ret,0)+"%")} من الطلبات من زبائن عائدين. فريج سند (86%) الأكثر ولاءً، وبنز القدم/جبلة حبشي يعتمد أكثر على الجدد (40% جدد).</span></div>
+      <div class="finding"><span class="tg w">التحويل</span><span>من يفتح القائمة: ${N(fmt(F.buyers/F.explorers*100,1)+"%")} يطلبون في فريج بن عاقول مقابل ${N(fmt(J.buyers/J.explorers*100,1)+"%")} في JUST BUNS. بنز زنج وسند يخسران أكثر المتصفحين.</span></div>
+      <div class="finding"><span class="tg w">جاهز</span><span>فريج بن عاقول باع في جاهز ${N(fmt(DATA.jahez.rev))} د.ب من ${N(DATA.jahez.ord)} طلباً في 6 فروع، أي ${N(fmt(DATA.jahez.rev/(DATA.jahez.rev+F.rev)*100,1)+"%")} فقط من مبيعات التوصيل للعلامة. و${N(DATA.jahez.to)} طلباً انتهى وقتها دون قبول، أغلبها في سار وقت الإغلاق.</span></div>
+      <div class="finding"><span class="tg g">الفطور</span><span>${N(fmt(bfast,0)+"%")} من كل طلبات العلامتين بين 5 و11 صباحاً. الصباح هو العمل الأساسي، والمساء مساحة غير مستغلة خصوصاً لـ JUST BUNS.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><h2>المبيعات اليومية للعلامتين</h2><p class="lede">العمودان مكدّسان: أسفلهما فريج بن عاقول وأعلاهما JUST BUNS.</p></div>
+    <div class="panel"><div class="lgd"><span><i style="background:var(--fba)"></i>فريج بن عاقول</span><span><i style="background:var(--jb)"></i>JUST BUNS</span></div><div class="chartbox"><canvas id="aDaily"></canvas></div></div>
+  </section>
+
+  <section>
+    <div class="head"><h2>المواقع: ماذا تبيع كل علامة في كل منطقة</h2><p class="lede">مجموع مبيعات العلامتين في كل موقع. سترة فيها فريج بن عاقول فقط.</p></div>
+    <div class="grid2">
+      <div class="panel ranks" id="locs"></div>
+      <div class="panel" style="display:grid;gap:18px;align-content:start">
+        <div><h3 style="margin-bottom:8px">حصة كل علامة</h3><div class="split"><span style="flex:${F.rev};background:var(--fba)">فريج ${N(fmt(F.rev/rev*100,1)+"%")}</span><span style="flex:${J.rev};background:var(--jb)">بنز ${N(fmt(J.rev/rev*100,1)+"%")}</span></div></div>
+        <div><h3 style="margin-bottom:8px">طريقة الدفع</h3><div class="split"><span style="flex:${rev-cash};background:var(--good)">إلكتروني ${N(fmt((rev-cash)/rev*100,1)+"%")}</span><span style="flex:${cash};background:var(--muted)">نقدي ${N(fmt(cash/rev*100,1)+"%")}</span></div></div>
+        <div class="tablewrap" style="border:0"><table style="min-width:0">
+          <thead><tr><th></th><th>فريج بن عاقول</th><th>JUST BUNS</th></tr></thead>
+          <tbody>
+            <tr><td>المبيعات</td><td class="num">${fmt(F.rev)}</td><td class="num">${fmt(J.rev)}</td></tr>
+            <tr><td>الطلبات</td><td class="num">${fmt(F.ord)}</td><td class="num">${fmt(J.ord)}</td></tr>
+            <tr><td>قيمة الطلب</td><td class="num">${fmt(F.rev/F.ord,2)}</td><td class="num">${fmt(J.rev/J.ord,2)}</td></tr>
+            <tr><td>أصناف لكل طلب</td><td class="num">${fmt(F.items/F.ord,2)}</td><td class="num">${fmt(J.items/J.ord,2)}</td></tr>
+            <tr><td>وقت التحضير</td><td class="num">${fmt(F.prep/60,1)} د</td><td class="num">${fmt(J.prep/60,1)} د</td></tr>
+            <tr><td>الصافي</td><td class="num">${fmt(F.net)}</td><td class="num">${fmt(J.net)}</td></tr>
+            <tr><td>الفروع</td><td class="num">9</td><td class="num">8</td></tr>
+          </tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead"><div class="head"><h2>ترتيب الفروع الـ 17</h2></div>
+      <div class="seg" id="rankSeg" role="group" aria-label="المقياس"><button type="button" data-v="rev" aria-pressed="${rankMetric==="rev"}">المبيعات</button><button type="button" data-v="ord" aria-pressed="${rankMetric==="ord"}">الطلبات</button><button type="button" data-v="aov" aria-pressed="${rankMetric==="aov"}">قيمة الطلب</button><button type="button" data-v="conv" aria-pressed="${rankMetric==="conv"}">التحويل</button></div></div>
+    <div class="panel"><div class="lgd" style="margin-bottom:12px"><span><i style="background:var(--fba)"></i>فريج بن عاقول</span><span><i style="background:var(--jb)"></i>JUST BUNS</span></div><div class="ranks" id="rank17"></div></div>
+  </section>
+
+  <section>
+    <div class="head"><h2>بطاقة التشغيل لكل الفروع</h2><p class="lede">اضغط على عنوان أي عمود للترتيب. الأخضر جيد، الأصفر يحتاج متابعة، الأحمر يحتاج تدخلاً.</p></div>
+    <div class="tablewrap"><table id="ops"></table></div>
+  </section>
+  ${footer()}`;
+
+  document.getElementById("locs").innerHTML=L.map(l=>`<div class="rankrow"><span>${l.n}</span><span class="tr"><span style="width:${l.f/lmax*100}%;background:var(--fba)"></span><span style="width:${l.j/lmax*100}%;background:var(--jb)"></span></span><span class="v num">${fmt(l.f+l.j)}</span></div>`).join("");
+  drawRank17(); drawOps(); drawPos();
+  document.getElementById("rankSeg").onclick=e=>{const b=e.target.closest("button"); if(!b) return; rankMetric=b.dataset.v; [...b.parentNode.children].forEach(x=>x.setAttribute("aria-pressed",x===b)); drawRank17();};
+  const days=[...Array(31)].map((_,i)=>i+1);
+  mk("aDaily",{type:"bar",data:{labels:days,datasets:[
+    {label:"فريج بن عاقول",data:DATA.brands.fba.dailyRev,backgroundColor:fc,stack:"s",borderRadius:2},
+    {label:"JUST BUNS",data:DATA.brands.jb.dailyRev,backgroundColor:jc,stack:"s",borderRadius:2}]},
+    options:baseOpts({interaction:{mode:"index",intersect:false},plugins:{...TT({title:i=>`${wdOf(+i[0].label)} ${i[0].label} أكتوبر`,label:c=>`${c.dataset.label}: ${fmt(c.parsed.y)} د.ب`}),tooltip:{...TT({}).tooltip,displayColors:true,callbacks:{title:i=>`${wdOf(+i[0].label)} ${i[0].label} أكتوبر`,label:c=>`${c.dataset.label}: ${fmt(c.parsed.y)} د.ب`}}},scales:{...baseOpts().scales,x:{...baseOpts().scales.x,stacked:true},y:{...baseOpts().scales.y,stacked:true}}})});
+}
+const BN=b=>(b.brand==="fba"?"فريج":"بنز")+" · "+b.name.split(" / ")[0];
+function drawRank17(){
+  const v=b=>rankMetric==="conv"?b.buyers/b.explorers*100:b[rankMetric];
+  const rows=[...ALL].sort((a,b)=>v(b)-v(a)), mx=v(rows[0]);
+  document.getElementById("rank17").innerHTML=rows.map(b=>`<div class="rankrow"><span>${BN(b)}</span><span class="tr"><span style="width:${v(b)/mx*100}%;background:var(--${b.brand})"></span></span><span class="v num">${rankMetric==="conv"?fmt(v(b),1)+"%":rankMetric==="aov"?fmt(v(b),2):fmt(v(b))}</span></div>`).join("");
+}
+const OC=[["name","الفرع"],["rev","المبيعات"],["offline","ساعات التوقف"],["rej","الرفض"],["awtRate","انتظار السائق"],["prep","التحضير"],["contact","الشكاوى"],["ready","تأكيد الجاهزية"],["ret","عائدون"],["rating","التقييم"]];
+function drawOps(){
+  const v=(b,k)=>k==="ret"?b.retC/(b.newC+b.retC)*100:k==="name"?BN(b):b[k];
+  const rows=[...ALL].sort((a,b)=>{const x=v(a,opsKey),y=v(b,opsKey); return (typeof x==="string"?x.localeCompare(y,"ar"):x-y)*opsDir;});
+  const P=(c,t)=>`<span class="pill ${c} num">${t}</span>`;
+  const t=document.getElementById("ops");
+  t.innerHTML=`<thead><tr>${OC.map(([k,l])=>`<th scope="col"><button type="button" data-k="${k}" ${k===opsKey?`aria-sort="${opsDir>0?"ascending":"descending"}"`:""}>${l}</button></th>`).join("")}</tr></thead><tbody>${rows.map(b=>{const oh=b.offline/3600;
+    return `<tr style="cursor:default"><td class="name"><span class="dot" style="background:var(--${b.brand})"></span>${BN(b)}</td><td class="num">${fmt(b.rev)}</td>
+    <td>${P(oh>=24?"r":oh>=3?"w":"g",oh>=24?fmt(oh/24,1)+" يوم":fmt(oh,1)+" س")}</td>
+    <td>${P(b.rej>=0.5?"r":b.rej>0?"w":"g",fmt(b.rej,2)+"%")}</td>
+    <td>${P(b.awtRate>=60?"r":b.awtRate>=50?"w":"g",fmt(b.awtRate,0)+"%")}</td>
+    <td>${P(b.prep>=720?"r":b.prep>=600?"w":"g",fmt(b.prep/60,1)+" د")}</td>
+    <td>${P(b.contact>=0.7?"r":b.contact>=0.4?"w":"g",fmt(b.contact,2)+"%")}</td>
+    <td>${P(b.ready>=98?"g":b.ready<=95.5?"r":"w",fmt(b.ready,1)+"%")}</td>
+    <td class="num">${fmt(v(b,"ret"),0)}%</td>
+    <td>${P(b.rating<4?"r":b.rating<4.4?"w":"g",fmt(b.rating,1))}</td></tr>`}).join("")}</tbody>`;
+  t.querySelectorAll("th button").forEach(btn=>btn.onclick=()=>{const k=btn.dataset.k; if(k===opsKey) opsDir*=-1; else {opsKey=k; opsDir=k==="name"?1:-1;} drawOps();});
+}
+
+document.querySelectorAll(".switch button").forEach(b=>b.onclick=()=>{if(brand===b.dataset.b)return; brand=b.dataset.b; selected=null; sortKey="rev"; sortDir=-1; try{localStorage.setItem("tal-view",brand)}catch(e){} render(); window.scrollTo({top:0,behavior:"auto"});});
+let lastDark=null;
+const rerender=()=>{const dk=getComputedStyle(document.body).getPropertyValue("--paper"); if(dk!==lastDark){lastDark=dk; render();}};
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",rerender);
+new MutationObserver(rerender).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+lastDark=getComputedStyle(document.body).getPropertyValue("--paper"); render();
 </script>
 </body></html>
